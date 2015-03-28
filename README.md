@@ -1,6 +1,6 @@
-# SeedStack Java Framework
+# SeedStack Java framework Spring extensions [![Build status](https://travis-ci.org/seedstack/seed-spring-extensions.svg?branch=master)](https://travis-ci.org/seedstack/seed-spring-extensions)
 
-Also known as Seed, the Java framework provides support for a large range of technologies and standards from the Java world.
+Extensions to use various Spring technologies in conjunction with SeedStack.
 
 # Copyright and license
 
