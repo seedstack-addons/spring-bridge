@@ -1,0 +1,66 @@
+<!--
+
+    Copyright (c) 2013-2015 by The SeedStack authors. All rights reserved.
+
+    This file is part of SeedStack, An enterprise-oriented full development stack.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.seedstack</groupId>
+        <artifactId>parent</artifactId>
+        <version>2.0.0-M1</version>
+    </parent>
+
+    <groupId>org.seedstack.seed</groupId>
+    <artifactId>seed-spring-extensions</artifactId>
+    <version>2.0.0-M1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-support</module>
+        <module>springbatch-support</module>
+        <module>doc</module>
+        <module>bom</module>
+    </modules>
+
+    <scm>
+        <url>https://github.com/seedstack/spring-extensions</url>
+        <connection>scm:git:git://github.com/seedstack/spring-extensions.git</connection>
+        <developerConnection>scm:git:git@github.com:seedstack/spring-extensions.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>spring-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/content/groups/staging</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/content/groups/staging</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
