@@ -8,4 +8,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-http\://seedstack.org/xml-schemas/spring-support=org.seedstack.seed.spring.internal.SeedNamespaceHandler
+http\://www.seedstack.org/xml-schemas/spring-support=org.seedstack.seed.spring.internal.SeedNamespaceHandler

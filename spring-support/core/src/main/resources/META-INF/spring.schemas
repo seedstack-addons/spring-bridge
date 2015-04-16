@@ -8,5 +8,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-http\://seedstack.org/xml-schemas/spring-support/spring-support-1.0.xsd=META-INF/schemas/spring-support-1.0.xsd
-http\://seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd=META-INF/schemas/spring-support-1.1.xsd
+http\://www.seedstack.org/xml-schemas/spring-support/spring-support-1.0.xsd=META-INF/schemas/spring-support-1.0.xsd
+http\://www.seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd=META-INF/schemas/spring-support-1.1.xsd

@@ -10,10 +10,10 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 -->
-<xsd:schema xmlns="http://seedstack.org/xml-schemas/spring-support"
+<xsd:schema xmlns="http://www.seedstack.org/xml-schemas/spring-support"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:beans="http://www.springframework.org/schema/beans"
-            targetNamespace="http://seedstack.org/xml-schemas/spring-support"
+            targetNamespace="http://www.seedstack.org/xml-schemas/spring-support"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
