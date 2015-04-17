@@ -11,9 +11,9 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:seed="http://seedstack.org/xml-schemas/spring-support"
+       xmlns:seed="http://www.seedstack.org/xml-schemas/spring-support"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-       http://seedstack.org/xml-schemas/spring-support http://seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd">
+       http://www.seedstack.org/xml-schemas/spring-support http://www.seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd">
 
     <seed:instance id="service1" class="org.seedstack.seed.spring.fixtures.Service"/>
 
