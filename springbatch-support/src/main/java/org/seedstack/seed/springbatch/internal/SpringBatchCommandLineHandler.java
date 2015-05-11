@@ -30,6 +30,17 @@ import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This {@link CommandLineHandler} can launch Spring Batch jobs with the following arguments:
+ *
+ * <ul>
+ *     <li>-j job-name</li>
+ *     <li>-l job-launcher-name</li>
+ *     <li>-P job-parameter-name=job-parameter-value</li>
+ * </ul>
+ *
+ * @author epo.jemba@ext.mpsa.com
+ */
 class SpringBatchCommandLineHandler implements CommandLineHandler {
 
     private static final String DEFAULT_JOB_LAUNCHER_NAME = "jobLauncher";
