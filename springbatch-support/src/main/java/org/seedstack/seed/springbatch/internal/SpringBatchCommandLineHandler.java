@@ -41,7 +41,7 @@ import java.util.Map;
  *
  * @author epo.jemba@ext.mpsa.com
  */
-class SpringBatchCommandLineHandler implements CommandLineHandler {
+public class SpringBatchCommandLineHandler implements CommandLineHandler {
 
     private static final String DEFAULT_JOB_LAUNCHER_NAME = "jobLauncher";
 
@@ -123,7 +123,7 @@ class SpringBatchCommandLineHandler implements CommandLineHandler {
         return injector.getInstance(Key.get(JobLauncher.class, Names.named(jln)));
     }
 
-    String option(String option, String defaultName) {
+    private String option(String option, String defaultName) {
         String ret = defaultName;
 
         if (!StringUtils.isBlank(option)) {
@@ -131,7 +131,5 @@ class SpringBatchCommandLineHandler implements CommandLineHandler {
         }
 
         return ret;
-
     }
-
 }
