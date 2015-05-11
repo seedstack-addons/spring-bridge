@@ -70,12 +70,12 @@
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-core-support-core</artifactId>
-            <version>${project.version}</version>
+            <version>${seed.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-cli-support-core</artifactId>
-            <version>${project.version}</version>
+            <version>${seed.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>
@@ -107,7 +107,7 @@
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-cli-support-test</artifactId>
-            <version>${project.version}</version>
+            <version>${seed.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

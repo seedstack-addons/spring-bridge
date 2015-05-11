@@ -46,12 +46,12 @@
 		<dependency>
 			<groupId>org.seedstack.seed</groupId>
 			<artifactId>seed-core-support-core</artifactId>
-			<version>${project.version}</version>
+			<version>${seed.version}</version>
 		</dependency>
         <dependency>
 			<groupId>org.seedstack.seed</groupId>
 			<artifactId>seed-transaction-support</artifactId>
-			<version>${project.version}</version>
+			<version>${seed.version}</version>
 		</dependency>
         <dependency>
 			<groupId>org.springframework</groupId>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.seedstack.seed</groupId>
 			<artifactId>seed-integrationtest-support-core</artifactId>
-            <version>${project.version}</version>
+            <version>${seed.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

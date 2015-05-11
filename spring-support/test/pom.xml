@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-integrationtest-support-core</artifactId>
-            <version>${project.version}</version>
+            <version>${seed.version}</version>
         </dependency>
 
         <dependency>
