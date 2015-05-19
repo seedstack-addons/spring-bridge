@@ -1,4 +1,5 @@
-# SeedStack Java framework Spring extensions [![Build status](https://travis-ci.org/seedstack/seed-spring-extensions.svg?branch=master)](https://travis-ci.org/seedstack/seed-spring-extensions) [![Stories in Ready](https://badge.waffle.io/seedstack/seed-spring-extensions.png?label=ready&title=Ready)](https://waffle.io/seedstack/seed-spring-extensions)
+# SeedStack Java framework Spring extensions 
+[![Build status](https://travis-ci.org/seedstack/seed-spring-extensions.svg?branch=master)](https://travis-ci.org/seedstack/seed-spring-extensions) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions)
 
 Extensions to use various Spring technologies in conjunction with SeedStack.
 
