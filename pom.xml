@@ -79,9 +79,11 @@
                         <licenseMerges>
                             <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
                             <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
                             <licenseMerge>BSD|The New BSD License</licenseMerge>
                             <licenseMerge>BSD|New BSD License</licenseMerge>
                             <licenseMerge>EPL 1.0|Eclipse Public License 1.0</licenseMerge>
+                            <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                             <licenseMerge>MIT|MIT License</licenseMerge>
                         </licenseMerges>
                     </configuration>
