@@ -12,9 +12,10 @@ package org.seedstack.seed.springbatch.internal;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
-import org.seedstack.seed.cli.spi.CliOption;
-import org.seedstack.seed.cli.spi.CommandLineHandler;
 import org.apache.commons.lang.StringUtils;
+import org.seedstack.seed.cli.api.CliCommand;
+import org.seedstack.seed.cli.api.CliOption;
+import org.seedstack.seed.cli.api.CommandLineHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
@@ -31,16 +32,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This {@link CommandLineHandler} can launch Spring Batch jobs with the following arguments:
+ * This {@link CommandLineHandler} is launched with the run-job command. It support the following arguments:
  *
  * <ul>
- *     <li>-j job-name</li>
- *     <li>-l job-launcher-name</li>
- *     <li>-P job-parameter-name=job-parameter-value</li>
+ * <li>-j job-name</li>
+ * <li>-l job-launcher-name</li>
+ * <li>-P job-parameter-name=job-parameter-value</li>
  * </ul>
  *
  * @author epo.jemba@ext.mpsa.com
+ * @author adrien.lauer@mpsa.com
  */
+@CliCommand(value = "run-job", description = "Launch Spring Batch jobs")
 public class SpringBatchCommandLineHandler implements CommandLineHandler {
 
     private static final String DEFAULT_JOB_LAUNCHER_NAME = "jobLauncher";
@@ -49,22 +52,17 @@ public class SpringBatchCommandLineHandler implements CommandLineHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBatchCommandLineHandler.class);
 
-    @CliOption(opt = "l", longOpt = "jobLauncher", optionalArg = true, description = "Spring Job Launcher Name")
+    @CliOption(name = "l", longName = "jobLauncher", valueCount = 1, description = "Job launcher name to use")
     String optionJobLauncherName;
 
-    @CliOption(opt = "j", longOpt = "job", optionalArg = true, description = "Spring Job Name")
+    @CliOption(name = "j", longName = "job", valueCount = 1, description = "Job name to launch")
     String optionJobName;
 
-    @CliOption(opt = "P", longOpt = "jobParameter", args = true, valueSeparator = '=', description = "Spring Job parameter")
-    String[] optionJobParameters;
+    @CliOption(name = "P", longName = "jobParameter", valueCount = -1, description = "A job parameter")
+    Map<String, String> optionJobParameters;
 
     @Inject
     Injector injector;
-
-    @Override
-    public String name() {
-        return "spring-batch-cli-handler";
-    }
 
     @Override
     public Integer call() throws JobExecutionException {
@@ -89,25 +87,17 @@ public class SpringBatchCommandLineHandler implements CommandLineHandler {
     }
 
     private JobParameters getJobParameters() {
-        JobParameters jobParameters;
-        Map<String, JobParameter> mapJobParameter = optionParameters(optionJobParameters);
-        if (mapJobParameter != null && !mapJobParameter.isEmpty()) {
-            jobParameters = new JobParameters(mapJobParameter);
-        } else {
-            jobParameters = new JobParameters();
-        }
-        return jobParameters;
-    }
+        if (optionJobParameters != null && !optionJobParameters.isEmpty()) {
+            Map<String, JobParameter> mapJobParameter = new HashMap<String, JobParameter>();
 
-    private Map<String, JobParameter> optionParameters(String[] optJobParameters) {
-        Map<String, JobParameter> mapJobParameter = null;
-        if (optJobParameters != null && optJobParameters.length > 0 && (optJobParameters.length % 2) == 0) {
-            mapJobParameter = new HashMap<String, JobParameter>();
-            for (int i = 0; i < optJobParameters.length; i = i + 2) {
-                mapJobParameter.put(optJobParameters[i], new JobParameter(optJobParameters[i + 1]));
+            for (Map.Entry<String, String> stringJobParameterEntry : optionJobParameters.entrySet()) {
+                mapJobParameter.put(stringJobParameterEntry.getKey(), new JobParameter(stringJobParameterEntry.getValue()));
             }
+
+            return new JobParameters(mapJobParameter);
+        } else {
+            return new JobParameters();
         }
-        return mapJobParameter;
     }
 
     private Job getJob() {

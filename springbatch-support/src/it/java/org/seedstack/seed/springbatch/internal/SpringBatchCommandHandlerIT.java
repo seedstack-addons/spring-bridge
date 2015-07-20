@@ -37,21 +37,21 @@ public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
     }
 
     @Test
-    @WithCommandLine(value = {"--job", "flatFileJob", "-Pfile=fileTest.csv"}, expectedExitCode = 0)
+    @WithCommandLine(command = "run-job", value = {"--job", "flatFileJob", "-Pfile=fileTest.csv"}, expectedExitCode = 0)
     public void execute_batch_without_error() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
     }
 
     @Test
-    @WithCommandLine(value = {"--job", "flatFileJob"}, expectedExitCode = 1)
+    @WithCommandLine(command = "run-job", value = {"--job", "flatFileJob"}, expectedExitCode = 1)
     public void execute_batch_with_error() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
     }
 
     @Test
-    @WithCommandLine(value = {"-j", "flatFileJob", "-Pfile2=fileTest1", "--jobParameter", "file=fileTest.csv", "-P file3=fileTest2"}, expectedExitCode = 0)
+    @WithCommandLine(command = "run-job", value = {"-j", "flatFileJob", "-Pfile2=fileTest1", "--jobParameter", "file=fileTest.csv", "-P file3=fileTest2"}, expectedExitCode = 0)
     public void execute_batch_with_multiple_parameters() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
