@@ -85,7 +85,6 @@
                             <licenseMerge>EPL 1.0|Eclipse Public License 1.0</licenseMerge>
                             <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                             <licenseMerge>MIT|MIT License</licenseMerge>
-                            <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                         </licenseMerges>
                     </configuration>
                 </plugin>
