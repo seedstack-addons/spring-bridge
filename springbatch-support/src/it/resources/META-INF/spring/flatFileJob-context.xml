@@ -49,12 +49,12 @@
 					</bean>
 				</property>
 				<property name="fieldSetMapper">
-					<bean class="org.seedstack.seed.springbatch.sample.EmployeeMapper" />
+					<bean class="org.seedstack.seed.springbatch.fixtures.EmployeeMapper" />
 				</property>
 			</bean>
 		</property>
 	</bean>
 
-	<bean id="systemOutWriter" class="org.seedstack.seed.springbatch.sample.SystemOutItemWriter" />
+	<bean id="systemOutWriter" class="org.seedstack.seed.springbatch.fixtures.SystemOutItemWriter" />
 	
 </beans>

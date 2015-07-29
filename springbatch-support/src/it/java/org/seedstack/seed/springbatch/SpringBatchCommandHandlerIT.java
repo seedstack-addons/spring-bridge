@@ -7,12 +7,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.seed.springbatch.internal;
+package org.seedstack.seed.springbatch;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.seedstack.seed.cli.api.WithCommandLine;
 import org.seedstack.seed.it.AbstractSeedIT;
-import org.junit.Test;
 import org.springframework.batch.core.repository.JobRepository;
 
 import javax.inject.Inject;
@@ -37,21 +37,21 @@ public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
     }
 
     @Test
-    @WithCommandLine(command = "run-job", value = {"--job", "flatFileJob", "-Pfile=fileTest.csv"}, expectedExitCode = 0)
+    @WithCommandLine(command = "run-job", args = {"--job", "flatFileJob", "-Pfile=fileTest.csv"}, expectedExitCode = 0)
     public void execute_batch_without_error() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
     }
 
     @Test
-    @WithCommandLine(command = "run-job", value = {"--job", "flatFileJob"}, expectedExitCode = 1)
+    @WithCommandLine(command = "run-job", args = {"--job", "flatFileJob"}, expectedExitCode = 1)
     public void execute_batch_with_error() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
     }
 
     @Test
-    @WithCommandLine(command = "run-job", value = {"-j", "flatFileJob", "-Pfile2=fileTest1", "--jobParameter", "file=fileTest.csv", "-P file3=fileTest2"}, expectedExitCode = 0)
+    @WithCommandLine(command = "run-job", args = {"-j", "flatFileJob", "-Pfile2=fileTest1", "--jobParameter", "file=fileTest.csv", "-P file3=fileTest2"}, expectedExitCode = 0)
     public void execute_batch_with_multiple_parameters() {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();

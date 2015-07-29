@@ -58,7 +58,7 @@ public class SpringBatchCommandLineHandler implements CommandLineHandler {
     @CliOption(name = "j", longName = "job", valueCount = 1, description = "Job name to launch")
     String optionJobName;
 
-    @CliOption(name = "P", longName = "jobParameter", valueCount = -1, description = "A job parameter")
+    @CliOption(name = "P", longName = "jobParameter", valueCount = -1, valueSeparator = '=', description = "A job parameter")
     Map<String, String> optionJobParameters;
 
     @Inject
