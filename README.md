@@ -1,7 +1,7 @@
-# SeedStack Java framework Spring extensions 
+# Spring bridge add-on
 [![Build status](https://travis-ci.org/seedstack/seed-spring-extensions.svg?branch=master)](https://travis-ci.org/seedstack/seed-spring-extensions) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions)
 
-Extensions to use various Spring technologies in conjunction with SeedStack.
+Integration of various Spring technologies with SeedStack.
 
 # Copyright and license
 
