@@ -13,17 +13,21 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.seedstack.seed</groupId>
-        <artifactId>seed-spring-support</artifactId>
+        <groupId>org.seedstack</groupId>
+        <artifactId>seed-spring</artifactId>
         <version>2.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>seed-spring-support-test</artifactId>
+    <artifactId>seed-spring-test</artifactId>
+
+    <properties>
+        <compatibility.artifactId>seed-spring-support-test</compatibility.artifactId>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.seedstack.seed</groupId>
-            <artifactId>seed-spring-support-core</artifactId>
+            <groupId>org.seedstack</groupId>
+            <artifactId>seed-spring-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -35,16 +39,19 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <version>1.1.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId> <!-- TODO remove -->
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
