@@ -12,8 +12,8 @@ batch jobs in Java. More information about Spring Batch on [http://docs.spring.i
 To enable Seed batch support use the following dependency snippet in your batch module:
 
     <dependency>
-        <groupId>org.seedstack.seed</groupId>
-        <artifactId>seed-springbatch-support</artifactId>
+        <groupId>org.seedstack.addons</groupId>
+        <artifactId>spring-batch</artifactId>
     </dependency>
 
 All Spring context XML files **must be** in under the `META-INF/spring` classpath location.
@@ -162,7 +162,7 @@ This example requires `business-core`:
 
         <dependency>
             <groupId>org.seedstack.seed</groupId>
-            <artifactId>seed-springbatch-support</artifactId>
+            <artifactId>spring-batch</artifactId>
         </dependency>
         <dependency>
            <groupId>org.seedstack.business</groupId>
@@ -178,13 +178,13 @@ with `-context.xml` to be automatically detected. The `application-context.xml` 
     <beans xmlns="http://www.springframework.org/schema/beans"
            xmlns:batch="http://www.springframework.org/schema/batch"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:seed="http://seed.inetpsa.com/schema/spring-support"
+           xmlns:seed="http://www.seedstack.org/xml-schemas/spring-support"
            xsi:schemaLocation="http://www.springframework.org/schema/batch
             http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-            http://seed.inetpsa.com/schema/spring-support
-            http://seed.inetpsa.com/schema/spring-support-1.0.xsd">
+            http://www.seedstack.org/xml-schemas/spring-support
+            http://www.seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd">
      
         <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
             <property name="transactionManager" ref="transactionManager" />
@@ -274,13 +274,13 @@ The `job-context.xml` file:
     <beans xmlns="http://www.springframework.org/schema/beans"
            xmlns:batch="http://www.springframework.org/schema/batch"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:seed="http://seed.inetpsa.com/schema/spring-support"
+           xmlns:seed="http://www.seedstack.org/xml-schemas/spring-support"
            xsi:schemaLocation="http://www.springframework.org/schema/batch
             http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-            http://seed.inetpsa.com/schema/spring-support
-            http://seed.inetpsa.com/schema/spring-support-1.0.xsd">
+            http://www.seedstack.org/xml-schemas/spring-support
+            http://www.seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd">
      
         <import resource="application-context.xml"/>
         
