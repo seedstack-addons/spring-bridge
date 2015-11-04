@@ -6,4 +6,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-http\://www.seedstack.org/xml-schemas/spring-support=org.seedstack.spring.internal.SeedNamespaceHandler
+org.seedstack.spring.test-value = Hello
+org.seedstack.spring.test-other-value = 5

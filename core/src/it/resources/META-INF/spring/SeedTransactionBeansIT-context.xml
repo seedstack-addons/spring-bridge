@@ -18,7 +18,7 @@
 
 	<tx:annotation-driven />
 	<!-- Component scan to find all Spring components -->
-	<context:component-scan base-package="org.seedstack.seed.spring.fixtures" />
+	<context:component-scan base-package="org.seedstack.spring.fixtures" />
 
 	<!-- Data Source -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -44,7 +44,7 @@
 		<!-- The packages that contain our Hibernate model classes -->
 		<property name="packagesToScan">
 			<list>
-				<value>org.seedstack.seed.spring.model</value>
+				<value>org.seedstack.spring.model</value>
 			</list>
 		</property>
 
