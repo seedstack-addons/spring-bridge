@@ -9,7 +9,7 @@ package org.seedstack.seed.spring.fixtures;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-import org.seedstack.seed.core.api.Install;
+import org.seedstack.seed.Install;
 
 @Install
 public class Module extends AbstractModule {

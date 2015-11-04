@@ -22,7 +22,7 @@ import org.springframework.transaction.IllegalTransactionStateException;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.seed.spring.fixtures.dao.CustomerDao;
 import org.seedstack.seed.spring.model.Customer;
-import org.seedstack.seed.transaction.api.Transactional;
+import org.seedstack.seed.transaction.Transactional;
 
 /**
  * SpringTransactionHandlerIT

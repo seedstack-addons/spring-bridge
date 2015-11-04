@@ -13,7 +13,7 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 import org.junit.Before;
 import org.junit.Test;
-import org.seedstack.seed.cli.api.WithCommandLine;
+import org.seedstack.seed.cli.WithCommandLine;
 import org.seedstack.seed.it.AbstractSeedIT;
 import org.seedstack.seed.spring.api.WithApplicationContexts;
 import org.springframework.batch.core.repository.JobRepository;
