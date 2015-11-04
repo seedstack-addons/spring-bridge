@@ -1,5 +1,5 @@
 # Spring bridge add-on
-[![Build status](https://travis-ci.org/seedstack/seed-spring-extensions.svg?branch=master)](https://travis-ci.org/seedstack/seed-spring-extensions) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.seed/seed-spring-extensions)
+[![Build status](https://travis-ci.org/seedstack/spring-bridge-addon.svg?branch=master)](https://travis-ci.org/seedstack/spring-bridge-addon) [![Coverage Status](https://coveralls.io/repos/seedstack/spring-bridge-addon/badge.svg?branch=master)](https://coveralls.io/r/seedstack/spring-bridge-addon?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.addons.spring/spring-bridge/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.addons.spring/spring-bridge)
 
 Integration of various Spring technologies with SeedStack.
 
