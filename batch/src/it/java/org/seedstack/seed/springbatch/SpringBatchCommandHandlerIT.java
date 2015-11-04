@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.seed.cli.WithCommandLine;
 import org.seedstack.seed.it.AbstractSeedIT;
-import org.seedstack.seed.spring.api.WithApplicationContexts;
+import org.seedstack.spring.WithApplicationContexts;
 import org.springframework.batch.core.repository.JobRepository;
 
 import javax.inject.Inject;
