@@ -9,12 +9,7 @@ menu:
 A specific Spring-Batch integration is also provided. Spring-Batch is a comprehensive solution to implement full-featured
 batch jobs in Java. More information about Spring Batch on [http://docs.spring.io/spring-batch/](http://docs.spring.io/spring-batch/).
 
-To enable Seed batch support use the following dependency snippet in your batch module:
-
-    <dependency>
-        <groupId>org.seedstack.addons</groupId>
-        <artifactId>spring-batch</artifactId>
-    </dependency>
+{{< dependency g="org.seedstack.addons.spring" a="spring-bridge-batch" >}}
 
 All Spring context XML files **must be** in under the `META-INF/spring` classpath location.
 

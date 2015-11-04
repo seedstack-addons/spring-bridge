@@ -16,27 +16,18 @@ inject Spring beans in Seed instances and Seed instances as Spring beans.
 Additionally, this support fills in a gap between Seed and Spring code allowing for instance to initiate a Spring-based 
 transaction from Seed code. Tt also provides a Spring namespace handler to make its features as easy to use as possible.
 
-# Maven dependency
+{{< dependency g="org.seedstack.addons.spring" a="spring-core" >}}
 
-To add this support to your project use the following dependency snippet:
-
-    <dependency>
-        <groupId>org.seedstack.addons</groupId>
-        <artifactId>spring-core</artifactId>
-    </dependency>
-
-# Usage
-
-## Spring to Seed
+# Spring to Seed
 
 Any Spring context located in the `META-INF/spring` classpath directory and named with the pattern `*-context.xml` will
 be autodetected by Seed. You can turn off auto detection with the following configuration property:
  
-    org.seedstack.seed.spring.autodetect = false
+    org.seedstack.spring.autodetect = false
     
 You can add custom contexts located anywhere in the classpath with the following configuration property:
     
-    org.seedstack.seed.spring.contexts = /resource/path/to/context1.xml, /resource/path/to/context2.xml
+    org.seedstack.spring.contexts = /resource/path/to/context1.xml, /resource/path/to/context2.xml
 
 You can inject any Spring bean from contexts detected by Seed in any Seed injectable component. You can inject using the 
 bean Class and the bean name: 
@@ -53,7 +44,7 @@ You can inject using any directly implemented Interface and the bean name:
 
 Note that you always need to qualify your injection with the bean identifier (`@Named("theBeanId")`)
 
-## Seed to Spring 
+# Seed to Spring
 
 To use Seed instances in Spring contexts, you need to add the Seed namespace to your Spring files:
 
