@@ -7,19 +7,18 @@
  */
 package org.seedstack.spring.internal;
 
-import org.seedstack.seed.core.internal.application.ApplicationPlugin;
-import io.nuun.kernel.api.Plugin;
+import com.google.common.collect.Lists;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
 import io.nuun.kernel.spi.DependencyInjectionProvider;
 import org.apache.commons.configuration.Configuration;
+import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,12 +52,12 @@ public class SpringPlugin extends AbstractPlugin {
 
     @Override
     public InitState init(InitContext initContext) {
-        ApplicationPlugin applicationPlugin = (ApplicationPlugin) initContext.pluginsRequired().iterator().next();
-        Configuration springConfiguration = applicationPlugin.getApplication().getConfiguration().subset(SPRING_PLUGIN_CONFIGURATION_PREFIX);
+        Configuration configuration = initContext.dependency(ConfigurationProvider.class).getConfiguration();
+        Configuration springConfiguration = configuration.subset(SPRING_PLUGIN_CONFIGURATION_PREFIX);
 
         Map<String, Collection<String>> scannedApplicationContexts = initContext.mapResourcesByRegex();
 
-        SeedConfigurationFactoryBean.configuration = applicationPlugin.getApplication().getConfiguration();
+        SeedConfigurationFactoryBean.configuration = configuration;
 
         boolean autodetect = springConfiguration.getBoolean("autodetect", true);
         for (String applicationContextPath : scannedApplicationContexts.get(APPLICATION_CONTEXT_REGEX)) {
@@ -94,10 +93,8 @@ public class SpringPlugin extends AbstractPlugin {
     }
 
     @Override
-    public Collection<Class<? extends Plugin>> requiredPlugins() {
-        Collection<Class<? extends Plugin>> plugins = new ArrayList<Class<? extends Plugin>>();
-        plugins.add(ApplicationPlugin.class);
-        return plugins;
+    public Collection<Class<?>> requiredPlugins() {
+        return Lists.<Class<?>>newArrayList(ConfigurationProvider.class);
     }
 
     @Override
