@@ -8,13 +8,15 @@
 package org.seedstack.spring.internal;
 
 
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+
 import com.google.inject.Module;
+
 import io.nuun.kernel.api.di.UnitModule;
 import io.nuun.kernel.api.plugin.PluginException;
 import io.nuun.kernel.core.internal.ModuleEmbedded;
 import io.nuun.kernel.spi.DependencyInjectionProvider;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
 
 class SpringDependencyInjectionProvider implements DependencyInjectionProvider {
 

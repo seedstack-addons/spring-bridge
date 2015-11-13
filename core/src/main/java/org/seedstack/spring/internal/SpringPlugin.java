@@ -7,22 +7,25 @@
  */
 package org.seedstack.spring.internal;
 
-import com.google.common.collect.Lists;
-import io.nuun.kernel.api.plugin.InitState;
-import io.nuun.kernel.api.plugin.context.InitContext;
-import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
-import io.nuun.kernel.core.AbstractPlugin;
-import io.nuun.kernel.spi.DependencyInjectionProvider;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.configuration.Configuration;
 import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
+
+import io.nuun.kernel.api.plugin.InitState;
+import io.nuun.kernel.api.plugin.context.InitContext;
+import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
+import io.nuun.kernel.core.AbstractPlugin;
+import io.nuun.kernel.spi.DependencyInjectionProvider;
 
 /**
  * This plugin provides Spring integration, converting any Spring bean defined in configured contexts in a named
@@ -36,9 +39,12 @@ public class SpringPlugin extends AbstractPlugin {
     public static final String APPLICATION_CONTEXT_REGEX = ".*-context.xml$";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringPlugin.class);
+	private ConfigurationProvider configurationProvider;
 
     private final Set<String> applicationContextsPaths = new HashSet<String>();
     private ClassPathXmlApplicationContext globalApplicationContext;
+    
+    private boolean managedTransaction;
 
     @Override
     public String name() {
@@ -52,7 +58,8 @@ public class SpringPlugin extends AbstractPlugin {
 
     @Override
     public InitState init(InitContext initContext) {
-        Configuration configuration = initContext.dependency(ConfigurationProvider.class).getConfiguration();
+    	configurationProvider =  initContext.dependency(ConfigurationProvider.class);
+        Configuration configuration = configurationProvider.getConfiguration();
         Configuration springConfiguration = configuration.subset(SPRING_PLUGIN_CONFIGURATION_PREFIX);
 
         Map<String, Collection<String>> scannedApplicationContexts = initContext.mapResourcesByRegex();
@@ -60,6 +67,7 @@ public class SpringPlugin extends AbstractPlugin {
         SeedConfigurationFactoryBean.configuration = configuration;
 
         boolean autodetect = springConfiguration.getBoolean("autodetect", true);
+        managedTransaction =  springConfiguration.getBoolean("manage-transactions", false);
         for (String applicationContextPath : scannedApplicationContexts.get(APPLICATION_CONTEXT_REGEX)) {
             if (autodetect && applicationContextPath.startsWith("META-INF/spring")) {
                 applicationContextsPaths.add(applicationContextPath);
@@ -104,7 +112,15 @@ public class SpringPlugin extends AbstractPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return SpringDependencyInjectionProvider.buildModuleFromSpringContext(globalApplicationContext);
+        return new AbstractModule() {			
+			@Override
+			protected void configure() {
+				install(SpringDependencyInjectionProvider.buildModuleFromSpringContext(globalApplicationContext));
+				if(managedTransaction){					
+					install(new SpringJpaModule(configurationProvider));
+				}
+			}
+		};
     }
 
     @Override
