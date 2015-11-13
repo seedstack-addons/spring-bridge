@@ -104,7 +104,7 @@ public class SpringPlugin extends AbstractPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return globalApplicationContext;
+        return SpringDependencyInjectionProvider.buildModuleFromSpringContext(globalApplicationContext);
     }
 
     @Override
