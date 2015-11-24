@@ -6,12 +6,13 @@ menu:
         weight: 20
 ---
 
-SEED implements its own transaction engine and sometimes it could be troublesome depending on your needs. Spring bridge provides a solution that goes both ways and lets you choose beteween either :
-* a transaction managed by Spring (for compatibility with Seed internal JPA features)
-* a transaction managed by Seed (for compatibility with Spring ORM features)
+When using Spring framework along SeedStack, you might need to trigger transactions accross framework boundaries. The Spring bridge add-on provides a solution that goes both ways and lets you choose beteween either:
+
+* Managing Spring transactions from Seed code,
+* Managing Seed transactions from Spring code.
 
 
-# Spring transaction managed by Seed
+# Seed-managed transactions
 
 You can specify a Spring-based transaction handler in your Seed transaction demarcation by adding the
 `@SpringTransactionManager` annotation besides the `@Transactional` one.
@@ -46,18 +47,17 @@ value is `transactionManager`. Example of use in an integration test:
 
 	}
 	
-# Seed JPA Transaction managed by Spring
+# Spring-managed transactions
 
-Seed has the ability to inject and use an ongoing Spring configured **JPA EntityManger**  in your Seed component, by doing so Spring will be the one who manage all the transactions.
-This feature can be very useful when you need to let Spring be the one who manage transactions at the batch configuration level.
+Seed has the ability to inject a Spring-configured **JPA EntityManger**  in your Seed components. In that case, Spring will be managing all the JPA transactions. Seed code will be executed whithin Spring transactions. This feature can be very useful in batch jobs, when you need to let Spring manage transactions for performance reasons.
 
-## Spring requirement :
-As stated above Spring will be the one that will need all your JPA features (mapping, transaction ...), as so your Spring context files need to be configured explicitly with JPA context (JPA Datasources, TransactionManagers, EntityManagerFactories).
+## Spring configuration
+As stated above Spring will be the one that will manage all JPA features (mapping, transaction ...). As such, your Spring context files need to be configured explicitly with JPA context (JPA Datasources, TransactionManagers, EntityManagerFactories).
 
-## Seed requirement :
-Seed props configuration should be JPALess, no JPA configuration is needed here.
-Seed only need to know that Spring will be the one doing all the JPA part by adding a `manage-transactions` property, as followed :
+## Seed configuration
+Seed JPA add-on can be removed if possible or at least left unconfigured. Add the following configuration for Spring bridge add-on instead:
 
 ```ini
 [org.seedstack.spring]
 manage-transactions = true
+```
