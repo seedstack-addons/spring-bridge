@@ -54,7 +54,7 @@
 			<groupId>org.seedstack.seed</groupId>
 			<artifactId>seed-transaction</artifactId>
 			<version>${seed.version}</version>
-		</dependency>
+		</dependency> 		
 		<dependency>
 			<groupId>org.seedstack.seed</groupId>
 			<artifactId>seed-testing</artifactId>
@@ -73,16 +73,21 @@
 			<version>${spring.version}</version>
             <scope>provided</scope>
         </dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+            <scope>provided</scope>
+		</dependency>        
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>        
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -99,10 +104,23 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.11.Final</version>
+			<scope>test</scope>
+		</dependency> 		
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.6.3</version>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 </project>
