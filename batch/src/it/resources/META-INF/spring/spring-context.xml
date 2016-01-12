@@ -18,7 +18,7 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="org.seedstack.seed.springbatch.sample" />
+	<context:component-scan base-package="org.seedstack.spring.batch.sample" />
 
 	<import resource="spring-context-batch.xml" />
 </beans>

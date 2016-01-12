@@ -5,12 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.seed.springbatch.sample.writer;
+package org.seedstack.spring.batch.sample.writer;
 
 import java.util.List;
 
-import org.seedstack.seed.springbatch.sample.domain.User;
-import org.seedstack.seed.springbatch.sample.service.UserService;
+import org.seedstack.spring.batch.sample.domain.User;
+import org.seedstack.spring.batch.sample.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;

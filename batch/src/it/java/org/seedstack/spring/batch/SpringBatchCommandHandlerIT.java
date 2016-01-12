@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.seed.springbatch;
+package org.seedstack.spring.batch;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.seed.cli.WithCommandLine;
 import org.seedstack.seed.it.AbstractSeedIT;
-import org.seedstack.seed.springbatch.sample.domain.ContactDao;
+import org.seedstack.spring.batch.sample.domain.ContactDao;
 import org.seedstack.spring.WithApplicationContexts;
 import org.springframework.batch.core.repository.JobRepository;
 

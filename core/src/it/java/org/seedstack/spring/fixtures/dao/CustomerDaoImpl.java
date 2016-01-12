@@ -39,7 +39,7 @@ public class CustomerDaoImpl implements CustomerDao
     @SuppressWarnings("unchecked")
     public List<Customer> findAll()
     {
-        return sessionFactory.getCurrentSession().createQuery("from org.seedstack.seed.spring.model.Customer").list();
+        return sessionFactory.getCurrentSession().createQuery("from org.seedstack.spring.model.Customer").list();
     }
 
     @Override

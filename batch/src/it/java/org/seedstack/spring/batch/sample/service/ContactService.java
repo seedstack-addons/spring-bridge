@@ -5,12 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.seed.springbatch.sample.domain;
+package org.seedstack.spring.batch.sample.service;
 
-import javax.persistence.EntityManager;
+import org.seedstack.business.Service;
+import org.seedstack.spring.batch.sample.domain.Contact;
 
-import org.seedstack.business.domain.Repository;
-
-public interface UserDao extends Repository<User, Long>{
-	public EntityManager getEntityManager();
+@Service
+public interface ContactService {
+	Contact save(Contact entity);
 }

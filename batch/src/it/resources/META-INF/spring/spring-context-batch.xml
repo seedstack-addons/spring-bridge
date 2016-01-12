@@ -50,18 +50,18 @@
 	</bean>
 
 	<bean id="contactWriter"
-		class="org.seedstack.seed.springbatch.sample.writer.ContactWriter">
+		class="org.seedstack.spring.batch.sample.writer.ContactWriter">
 		<property name="contactService">
 			<seed:instance
-				class="org.seedstack.seed.springbatch.sample.service.ContactService" />
+				class="org.seedstack.spring.batch.sample.service.ContactService" />
 		</property>
 	</bean>
 	
 	
-	<bean id="userWriter" class="org.seedstack.seed.springbatch.sample.writer.UserWriter">
+	<bean id="userWriter" class="org.seedstack.spring.batch.sample.writer.UserWriter">
 		<property name="userService">
 			<seed:instance
-				class="org.seedstack.seed.springbatch.sample.service.UserService" />
+				class="org.seedstack.spring.batch.sample.service.UserService" />
 		</property>
 	</bean>
 	<batch:job id="fileUploadJob">

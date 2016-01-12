@@ -8,7 +8,3 @@
 
 [org.seedstack.spring]
 manage-transactions = true
-#[org.seedstack.seed.springbatch.sample.domain.ContactDaoImpl]
-#jpa-unit = default
-#[org.seedstack.seed.springbatch.sample.domain.UserDaoImpl]
-#jpa-unit = default2
