@@ -1,6 +1,13 @@
 ---
 title: "Batch"
-addon: "Spring bridge"
+name: "Spring bridge"
+tags:
+    - "batch"
+    - "spring"
+    - "job"
+    - "bridge"
+zones:
+    - Addons
 menu:
     AddonSpringBridge:
         weight: 30

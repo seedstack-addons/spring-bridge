@@ -1,11 +1,20 @@
 ---
-title: "Overview"
-addon: "Spring bridge"
+title: "Basics"
+name: "Spring bridge"
 repo: "https://github.com/seedstack/spring-bridge-addon"
 author: "SeedStack"
 description: "Integrates various Spring framework technologies with SeedStack to enable composing hybrid applications."
 min-version: "15.11+"
 backend: true
+weight: -1
+tags:
+    - "spring"
+    - "bridge"
+    - "bean"
+    - "injection"
+    - "context"
+zones:
+    - Addons
 menu:
     AddonSpringBridge:
         weight: 10

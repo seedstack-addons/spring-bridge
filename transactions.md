@@ -1,6 +1,13 @@
 ---
 title: "Transactions"
-addon: "Spring bridge"
+name: "Spring bridge"
+tags:
+    - "spring"
+    - "bridge"
+    - "transaction"
+    - "jpa"
+zones:
+    - Addons
 menu:
     AddonSpringBridge:
         weight: 20
