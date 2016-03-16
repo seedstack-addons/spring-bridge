@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013-2015, The SeedStack authors <http://seedstack.org>
+ * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,6 +8,7 @@
 package org.seedstack.spring.internal;
 
 
+import io.nuun.kernel.core.internal.injection.ModuleEmbedded;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -15,7 +16,6 @@ import com.google.inject.Module;
 
 import io.nuun.kernel.api.di.UnitModule;
 import io.nuun.kernel.api.plugin.PluginException;
-import io.nuun.kernel.core.internal.ModuleEmbedded;
 import io.nuun.kernel.spi.DependencyInjectionProvider;
 
 class SpringDependencyInjectionProvider implements DependencyInjectionProvider {

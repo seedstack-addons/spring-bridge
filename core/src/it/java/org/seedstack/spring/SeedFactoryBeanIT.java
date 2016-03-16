@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013-2015, The SeedStack authors <http://seedstack.org>
+ * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11,14 +11,15 @@ package org.seedstack.spring;
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.seedstack.spring.fixtures.DummyService;
-import org.seedstack.spring.fixtures.Service;
 import io.nuun.kernel.api.Kernel;
 import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.seedstack.seed.core.Seed;
+import org.seedstack.spring.fixtures.DummyService;
+import org.seedstack.spring.fixtures.Service;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -26,11 +27,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Proxy;
 
-import static io.nuun.kernel.core.NuunCore.createKernel;
-import static io.nuun.kernel.core.NuunCore.newKernelConfiguration;
-
 public class SeedFactoryBeanIT {
-    static Kernel underTest;
+    static Kernel kernel;
     ApplicationContext context;
     Holder holder;
 
@@ -50,14 +48,12 @@ public class SeedFactoryBeanIT {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        underTest = createKernel(newKernelConfiguration());
-        underTest.init();
-        underTest.start();
+        kernel = Seed.createKernel();
     }
 
     @AfterClass
     public static void afterClass() {
-        underTest.stop();
+        Seed.disposeKernel(kernel);
     }
 
     @Before
@@ -68,7 +64,7 @@ public class SeedFactoryBeanIT {
                 bind(Holder.class);
             }
         };
-        holder = underTest.objectGraph().as(Injector.class).createChildInjector(aggregationModule).getInstance(Holder.class);
+        holder = kernel.objectGraph().as(Injector.class).createChildInjector(aggregationModule).getInstance(Holder.class);
         context = new ClassPathXmlApplicationContext("META-INF/spring/SeedFactoryBeanIT-context.xml");
     }
 
