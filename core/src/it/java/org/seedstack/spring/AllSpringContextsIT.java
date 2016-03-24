@@ -19,9 +19,6 @@ import javax.inject.Named;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author adrien.lauer@mpsa.com
- */
 @WithApplicationContexts({"META-INF/spring/first-context.xml", "META-INF/spring/second-context.xml"})
 public class AllSpringContextsIT extends AbstractSeedIT {
     @Inject

@@ -15,6 +15,7 @@
         </encoder>
     </appender>
     <root level="WARN">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
+    <logger name="org.seedstack.seed.transaction.internal.LocalTransactionManager" level="DEBUG"/>
 </configuration>

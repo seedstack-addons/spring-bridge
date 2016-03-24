@@ -7,7 +7,6 @@
  */
 package org.seedstack.spring;
 
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Module;

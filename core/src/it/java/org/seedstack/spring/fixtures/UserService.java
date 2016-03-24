@@ -10,5 +10,5 @@ package org.seedstack.spring.fixtures;
 import javax.persistence.EntityManager;
 
 public interface UserService {
-	EntityManager getEntityManager();
+    EntityManager getEntityManager();
 }

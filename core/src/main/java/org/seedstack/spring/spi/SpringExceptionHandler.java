@@ -6,20 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.spring.spi;
 
 import org.seedstack.seed.transaction.spi.ExceptionHandler;
-import org.springframework.transaction.TransactionStatus;
-
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
+import org.springframework.transaction.TransactionStatus;
 
 /**
  * Exception handler for Spring transactions.
- * 
- * @author redouane.loulou@ext.mpsa.com
  *
+ * *
  */
 public interface SpringExceptionHandler extends ExceptionHandler<TransactionStatus> {
 

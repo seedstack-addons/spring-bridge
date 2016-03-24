@@ -7,9 +7,9 @@
  */
 package org.seedstack.spring.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.google.inject.AbstractModule;
+import com.google.inject.Key;
+import com.google.inject.name.Names;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -18,9 +18,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Key;
-import com.google.inject.name.Names;
+import java.util.HashMap;
+import java.util.Map;
 
 class SpringModule extends AbstractModule {
     private class SpringBeanDefinition {
@@ -32,11 +31,11 @@ class SpringModule extends AbstractModule {
             this.beanFactory = beanFactory;
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public ConfigurableListableBeanFactory getBeanFactory() {
+        ConfigurableListableBeanFactory getBeanFactory() {
             return beanFactory;
         }
     }
@@ -58,19 +57,19 @@ class SpringModule extends AbstractModule {
         bindTransactionHandlers();
     }
 
-	private void bindTransactionHandlers() {
-		String [] beanNamesForTransactionManager = beanFactory.getBeanNamesForType(AbstractPlatformTransactionManager.class);
-		if(beanNamesForTransactionManager!=null && beanNamesForTransactionManager.length>0){			
-			for (String beanNameForTransactionManager : beanNamesForTransactionManager) {			
-				SpringTransactionStatusLink transactionStatusLink = new SpringTransactionStatusLink();
-				SpringTransactionHandler transactionHandler = new SpringTransactionHandler(transactionStatusLink, beanNameForTransactionManager);
-				requestInjection(transactionHandler);
-				bind(Key.get(SpringTransactionHandler.class,Names.named(beanNameForTransactionManager))).toInstance(transactionHandler);
-			}
-		}
-	}
+    private void bindTransactionHandlers() {
+        String[] beanNamesForTransactionManager = beanFactory.getBeanNamesForType(AbstractPlatformTransactionManager.class);
+        if (beanNamesForTransactionManager != null && beanNamesForTransactionManager.length > 0) {
+            for (String beanNameForTransactionManager : beanNamesForTransactionManager) {
+                SpringTransactionStatusLink transactionStatusLink = new SpringTransactionStatusLink();
+                SpringTransactionHandler transactionHandler = new SpringTransactionHandler(transactionStatusLink, beanNameForTransactionManager);
+                requestInjection(transactionHandler);
+                bind(Key.get(SpringTransactionHandler.class, Names.named(beanNameForTransactionManager))).toInstance(transactionHandler);
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     private void bindFromApplicationContext() {
         boolean debugEnabled = LOGGER.isDebugEnabled();
 
@@ -89,7 +88,7 @@ class SpringModule extends AbstractModule {
 
                     // FactoryBean special case: retrieve it and query for the object type it creates
                     if (FactoryBean.class.isAssignableFrom(beanClass)) {
-                        beanClass = ((FactoryBean)currentBeanFactory.getBean('&' + beanName)).getObjectType();
+                        beanClass = ((FactoryBean) currentBeanFactory.getBean('&' + beanName)).getObjectType();
                         if (beanClass == null) {
                             LOGGER.warn("Cannot bind spring bean " + beanName + " because its factory bean cannot determine its class");
                             continue;

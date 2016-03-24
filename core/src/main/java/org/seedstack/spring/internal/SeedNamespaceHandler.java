@@ -15,12 +15,10 @@ import org.w3c.dom.Element;
 
 /**
  * This class handles the SEED Spring namespace.
- *
- * @author adrien.lauer@mpsa.com
  */
 public class SeedNamespaceHandler extends NamespaceHandlerSupport {
-    public static final String INSTANCE_LOCAL_NAME = "instance";
-    public static final String CONFIGURATION_LOCAL_NAME = "configuration";
+    private static final String INSTANCE_LOCAL_NAME = "instance";
+    private static final String CONFIGURATION_LOCAL_NAME = "configuration";
 
     @Override
     public void init() {

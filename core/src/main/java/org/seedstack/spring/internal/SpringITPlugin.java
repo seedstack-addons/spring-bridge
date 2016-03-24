@@ -23,8 +23,6 @@ import java.util.Map;
 
 /**
  * This IT plugin enables to specify explicitly the spring contexts used for a test.
- *
- * @author adrien.lauer@mpsa.com
  */
 public class SpringITPlugin implements ITRunnerPlugin {
     @Override

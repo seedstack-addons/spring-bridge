@@ -14,7 +14,7 @@
 	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL" >
 		<class>org.seedstack.spring.model.Contact</class>
 		<properties>
-	        <property name="PERSISTENCE_UNIT_NAME" value="default"/>
+	        <property name="org.seedstack.jpa.unit-name" value="default"/>
 	    </properties>
 	</persistence-unit>
 </persistence>

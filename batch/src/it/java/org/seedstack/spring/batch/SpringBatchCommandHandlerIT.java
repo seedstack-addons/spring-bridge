@@ -7,34 +7,29 @@
  */
 package org.seedstack.spring.batch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.seedstack.seed.cli.WithCommandLine;
-import org.seedstack.seed.it.AbstractSeedIT;
-import org.seedstack.spring.batch.sample.domain.ContactDao;
-import org.seedstack.spring.WithApplicationContexts;
-import org.springframework.batch.core.repository.JobRepository;
-
 import com.google.inject.ConfigurationException;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
+import org.junit.Before;
+import org.junit.Test;
+import org.seedstack.seed.cli.WithCommandLine;
+import org.seedstack.seed.it.AbstractSeedIT;
+import org.seedstack.spring.WithApplicationContexts;
+import org.seedstack.spring.batch.sample.domain.ContactDao;
+import org.springframework.batch.core.repository.JobRepository;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- * @author adrien.lauer@mpsa.com
- */
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
+
 public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
     @Inject
     @Named("jobRepository")
     JobRepository jobRepository;
-    
+
     @Inject
     ContactDao contactDao;
 
@@ -79,8 +74,8 @@ public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
         assertThat(passedBefore).isTrue();
         assertThat(jobRepository).isNotNull();
     }
-    
-	@Test
+
+    @Test
     @WithCommandLine(command = "run-job", args = {"--job", "fileUploadJob"}, expectedExitCode = 0)
     @WithApplicationContexts({"META-INF/spring/spring-context-batch.xml", "META-INF/spring/spring-context-orm.xml", "META-INF/spring/spring-context.xml"})
     public void execute_batch_with_spring_transactionmanager() {
@@ -88,7 +83,8 @@ public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
         assertThat(contactDao).isNotNull();
         assertThat(contactDao.getEntityManager()).isNotNull();
     }
-	@Test
+
+    @Test
     @WithCommandLine(command = "run-job", args = {"--job", "fileUploadJobWith2Manager"}, expectedExitCode = 0)
     @WithApplicationContexts({"META-INF/spring/spring-context-batch.xml", "META-INF/spring/spring-context-orm.xml", "META-INF/spring/spring-context.xml"})
     public void execute_threaded_batch_with_2_spring_transactionmanager() {
@@ -96,5 +92,5 @@ public class SpringBatchCommandHandlerIT extends AbstractSeedIT {
         assertThat(contactDao).isNotNull();
         assertThat(contactDao.getEntityManager()).isNotNull();
     }
-	
+
 }

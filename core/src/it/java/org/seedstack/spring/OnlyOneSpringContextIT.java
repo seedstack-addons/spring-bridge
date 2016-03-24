@@ -23,9 +23,6 @@ import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-/**
- * @author adrien.lauer@mpsa.com
- */
 @WithApplicationContexts("META-INF/spring/first-context.xml")
 public class OnlyOneSpringContextIT extends AbstractSeedIT {
     @Inject
@@ -37,7 +34,7 @@ public class OnlyOneSpringContextIT extends AbstractSeedIT {
 
         try {
             injector.getInstance(Key.get(Service.class, Names.named("serviceTest2")));
-        } catch(ConfigurationException e) {
+        } catch (ConfigurationException e) {
             return;
         }
 

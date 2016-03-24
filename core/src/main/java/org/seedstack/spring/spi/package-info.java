@@ -8,6 +8,5 @@
 /**
  * Provides to extend the seed-spring bridge.
  *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.spring.spi;

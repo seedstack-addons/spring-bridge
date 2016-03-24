@@ -37,9 +37,6 @@ import java.util.Map;
  * <li>-l job-launcher-name</li>
  * <li>-P job-parameter-name=job-parameter-value</li>
  * </ul>
- *
- * @author epo.jemba@ext.mpsa.com
- * @author adrien.lauer@mpsa.com
  */
 @CliCommand(value = "run-job", description = "Launch Spring Batch jobs")
 public class SpringBatchCommandLineHandler implements CommandLineHandler {

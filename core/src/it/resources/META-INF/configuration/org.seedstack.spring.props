@@ -10,3 +10,6 @@
 manage-transactions = true
 test-value = Hello
 test-other-value = 5
+
+[org.seedstack.spring.fixtures.UserServiceImpl]
+jpa-unit = default2

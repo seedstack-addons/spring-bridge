@@ -10,26 +10,32 @@
  */
 package org.seedstack.spring;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.junit.Test;
 import org.seedstack.seed.it.AbstractSeedIT;
 import org.seedstack.spring.fixtures.EmService;
+import org.seedstack.spring.fixtures.TransactionalService;
 
-/**
- * @author adrien.lauer@mpsa.com
- */
+import javax.inject.Inject;
+import javax.inject.Named;
+
 @WithApplicationContexts({"META-INF/spring/MultipleTransactionManagerOrm-context.xml", "META-INF/spring/MultipleTransactionManagerService-context.xml"})
 public class ManagedSpringTransactionsIT extends AbstractSeedIT {
     @Inject
     @Named("emService")
     EmService emService;
 
+    @Inject
+    @Named("transactionalService")
+    TransactionalService transactionalService;
+
 
     @Test
-    public void specified_spring_contexts_should_be_loaded() {
-        emService.testContactTransaction();
+    public void nested_transactions() {
+        transactionalService.doSomethingWithNestedTransactions();
+    }
+
+    @Test
+    public void simple_transaction() {
         emService.testUserTransaction();
     }
 }

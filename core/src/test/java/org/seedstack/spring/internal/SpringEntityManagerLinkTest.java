@@ -26,7 +26,7 @@ import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 @RunWith(MockitoJUnitRunner.class)
 public class SpringEntityManagerLinkTest {
 
-	private SpringEntityManagerLink SpringEntityManagerLink;
+	private SpringEntityManagerLink springEntityManagerLink;
 	
 	@Mock
 	private ConfigurationProvider configurationProvider;
@@ -39,16 +39,16 @@ public class SpringEntityManagerLinkTest {
 	
 	@Before
 	public void up(){
-		SpringEntityManagerLink = new SpringEntityManagerLink(configurationProvider, this.getClass());
+		springEntityManagerLink = new SpringEntityManagerLink(configurationProvider, this.getClass());
 	}
 	
 	@Test
 	public void no_entityManagerfactory_found() {
 		try {
 			Map<String, EntityManagerFactory> map = new java.util.HashMap<String, EntityManagerFactory>();
-			Whitebox.invokeMethod(SpringEntityManagerLink, "getEntityManager",map);
+			Whitebox.invokeMethod(springEntityManagerLink, "getEntityManager",map);
 		} catch (Exception e) {
-			Assertions.assertThat(e.getMessage()).isEqualTo(SeedException.createNew(SpringErrorCode.UNABLE_TO_INJECT_SPRING_ENTITYMANAGER).getMessage());
+			Assertions.assertThat(e.getMessage()).isEqualTo(SeedException.createNew(SpringErrorCode.NO_SPRING_ENTITYMANAGER).getMessage());
 		}
 	}
 	
@@ -61,9 +61,9 @@ public class SpringEntityManagerLinkTest {
 			
 			Mockito.when(configurationProvider.getConfiguration(this.getClass())).thenReturn(configuration);
 			Mockito.when(configuration.getString(SpringEntityManagerLink.JPA_UNIT_PROPERTY)).thenReturn(null);
-			Whitebox.invokeMethod(SpringEntityManagerLink, "getEntityManager",map);
+			Whitebox.invokeMethod(springEntityManagerLink, "getEntityManager",map);
 		} catch (Exception e) {
-			Assertions.assertThat(e.getMessage()).isEqualTo(SeedException.createNew(SpringErrorCode.MORE_THAN_ONE_UNIT_FOUND).getMessage());
+			Assertions.assertThat(e.getMessage()).isEqualTo(SeedException.createNew(SpringErrorCode.AMBIGUOUS_SPRING_ENTITYMANAGER).getMessage());
 		}
 	}
 

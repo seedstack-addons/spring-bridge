@@ -10,52 +10,51 @@ package org.seedstack.spring.fixtures;
 import org.assertj.core.api.Assertions;
 import org.seedstack.spring.model.Contact;
 import org.seedstack.spring.model.User;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class EmServiceImpl implements EmService{
+public class EmServiceImpl implements EmService {
+    private UserService userService;
 
-	private UserService userService;
-	
-	private ContactService contactService;
+    private ContactService contactService;
 
-	@Transactional("contact")
-	public void testContactTransaction() {
-		try{			
-			Contact contact = new Contact("firstName", "lastName", "email");
-			Assertions.assertThat(contactService).isNotNull();
-			contactService.getEntityManager().persist(contact);
-		}catch(Exception e){
-			Assertions.fail(e.getMessage(), e);
-		}		
-	}
+    @Override
+    public void testContactTransaction() {
+        Contact contact = new Contact("firstName", "lastName", "email");
+        Assertions.assertThat(contactService).isNotNull();
+        contactService.getEntityManager().persist(contact);
+    }
 
-	@Transactional("user")
-	public void testUserTransaction() {
-		try{			
-			User user = new User("firstName", "lastName", "email");
-			Assertions.assertThat(userService).isNotNull();
-			userService.getEntityManager().persist(user);
-		}catch(Exception e){
-			Assertions.fail(e.getMessage(), e);
-		}		
-	}
+    @Transactional(value = "user", propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void nestedUserTransaction() {
+        User user = new User("otherFirstName", "otherLastName", "otherEmail");
+        userService.getEntityManager().persist(user);
+    }
 
-	public UserService getUserService() {
-		return userService;
-	}
+    @Transactional("user")
+    @Override
+    public void testUserTransaction() {
+        User user = new User("firstName", "lastName", "email");
+        Assertions.assertThat(userService).isNotNull();
+        userService.getEntityManager().persist(user);
+    }
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    public UserService getUserService() {
+        return userService;
+    }
 
-	public ContactService getContactService() {
-		return contactService;
-	}
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	public void setContactService(ContactService contactService) {
-		this.contactService = contactService;
-	}
+    public ContactService getContactService() {
+        return contactService;
+    }
 
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
 
 }

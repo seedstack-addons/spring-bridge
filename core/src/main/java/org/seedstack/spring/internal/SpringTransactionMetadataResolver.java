@@ -7,19 +7,17 @@
  */
 package org.seedstack.spring.internal;
 
+import org.aopalliance.intercept.MethodInvocation;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
-import org.seedstack.spring.SpringTransactionManager;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;
-import org.aopalliance.intercept.MethodInvocation;
+import org.seedstack.spring.SpringTransactionManager;
 
 /**
  * This {@link org.seedstack.seed.transaction.spi.TransactionMetadataResolver} resolves metadata for transactions marked
  * with {@link SpringTransactionManager}.
- *
- * @author adrien.lauer@mpsa.com
  */
-public class SpringTransactionMetadataResolver implements TransactionMetadataResolver {
+class SpringTransactionMetadataResolver implements TransactionMetadataResolver {
     @Override
     public TransactionMetadata resolve(MethodInvocation methodInvocation, TransactionMetadata defaults) {
         SpringTransactionManager springTransactionManager = SeedReflectionUtils.getMetaAnnotationFromAncestors(methodInvocation.getMethod(), SpringTransactionManager.class);

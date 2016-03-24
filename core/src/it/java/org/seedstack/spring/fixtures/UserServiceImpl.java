@@ -12,10 +12,10 @@ import javax.persistence.EntityManager;
 
 public class UserServiceImpl implements UserService {
 
-	@Inject
-	private EntityManager entityManager;
+    @Inject
+    private EntityManager entityManager;
 
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

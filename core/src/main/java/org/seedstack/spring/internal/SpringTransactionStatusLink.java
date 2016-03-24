@@ -6,52 +6,49 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.spring.internal;
+
+import org.seedstack.seed.transaction.spi.TransactionalLink;
+import org.springframework.transaction.TransactionStatus;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import org.springframework.transaction.TransactionStatus;
-
-import org.seedstack.seed.transaction.spi.TransactionalLink;
-
 /**
  * SpringTransactionStatusLink
- * 
- * @author redouane.loulou@ext.mpsa.com
  */
 class SpringTransactionStatusLink implements TransactionalLink<TransactionStatus> {
 
-	private final ThreadLocal<Deque<TransactionStatus>> transactionStatusThreadLocal ;
-	
-	SpringTransactionStatusLink() {
-		transactionStatusThreadLocal =  new ThreadLocal<Deque<TransactionStatus>>() {
-	            @Override
-	            protected Deque<TransactionStatus> initialValue() {
-	                return new ArrayDeque<TransactionStatus>();
-	            }
-	        };
-	}
+    private final ThreadLocal<Deque<TransactionStatus>> transactionStatusThreadLocal;
+
+    SpringTransactionStatusLink() {
+        transactionStatusThreadLocal = new ThreadLocal<Deque<TransactionStatus>>() {
+            @Override
+            protected Deque<TransactionStatus> initialValue() {
+                return new ArrayDeque<TransactionStatus>();
+            }
+        };
+    }
 
 
-	@Override
-	public TransactionStatus get() {
+    @Override
+    public TransactionStatus get() {
         TransactionStatus peek = transactionStatusThreadLocal.get().peek();
-        if (peek==null) {
+        if (peek == null) {
             throw new IllegalStateException("Attempt to get a Spring TransactionStatus without a transaction");
         }
 
         return peek;
-	}
+    }
 
 
     void push(TransactionStatus transactionStatus) {
-    	transactionStatusThreadLocal.get().push(transactionStatus);
+        transactionStatusThreadLocal.get().push(transactionStatus);
     }
 
-    TransactionStatus pop(){
+    TransactionStatus pop() {
         return transactionStatusThreadLocal.get().pop();
     }
 

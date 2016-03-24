@@ -7,8 +7,6 @@
  */
 package org.seedstack.spring.fixtures.dao;
 
-import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.seedstack.spring.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,51 +14,39 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Implements the data access methods for Customer persistence
- *
- * @author shaines
- */
+import java.util.List;
 
-@Repository( "customerDao" )
+@Repository("customerDao")
 @Transactional(propagation = Propagation.MANDATORY)
-public class CustomerDaoImpl implements CustomerDao
-{
+public class CustomerDaoImpl implements CustomerDao {
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public Customer findById( long id )
-    {
-        return ( Customer )sessionFactory.getCurrentSession().get(Customer.class, id);
+    public Customer findById(long id) {
+        return (Customer) sessionFactory.getCurrentSession().get(Customer.class, id);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Customer> findAll()
-    {
+    public List<Customer> findAll() {
         return sessionFactory.getCurrentSession().createQuery("from org.seedstack.spring.model.Customer").list();
     }
 
     @Override
-    public void save( Customer customer )
-    {
+    public void save(Customer customer) {
         sessionFactory.getCurrentSession().save(customer);
     }
 
     @Override
-    public void update( Customer customer )
-    {
+    public void update(Customer customer) {
         sessionFactory.getCurrentSession().update(customer);
     }
 
     @Override
-    public void delete( Customer customer )
-    {
-        sessionFactory.getCurrentSession().delete( customer );
+    public void delete(Customer customer) {
+        sessionFactory.getCurrentSession().delete(customer);
     }
-
-
 
 
 }

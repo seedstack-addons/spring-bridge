@@ -11,5 +11,5 @@ import javax.persistence.EntityManager;
 
 public interface ContactService {
 
-	EntityManager getEntityManager();
+    EntityManager getEntityManager();
 }

@@ -7,8 +7,9 @@
  */
 package org.seedstack.spring.internal;
 
-import com.google.inject.Provider;
 import org.springframework.beans.factory.BeanFactory;
+
+import javax.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

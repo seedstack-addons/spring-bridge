@@ -18,11 +18,9 @@ import java.lang.annotation.Target;
  * Specifies the Spring applications contexts to use in an integration test. Apply this annotation on a test class. It
  * can also be applied to methods if a different kernel is started for each method (i.e. testing kernel mode is per
  * test, not per test class).
- *
- * @author adrien.lauer@mpsa.com
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Documented
 @Inherited
 public @interface WithApplicationContexts {

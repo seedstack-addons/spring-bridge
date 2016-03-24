@@ -9,9 +9,10 @@ package org.seedstack.spring.internal;
 
 import org.seedstack.seed.ErrorCode;
 
-enum SpringErrorCode implements ErrorCode{
+enum SpringErrorCode implements ErrorCode {
 
-	UNABLE_TO_INJECT_SPRING_ENTITYMANAGER,
-	NO_JPA_UNIT_FOUND,
-	MORE_THAN_ONE_UNIT_FOUND
+    NO_SPRING_ENTITYMANAGER,
+    UNKNOWN_SPRING_ENTITYMANAGER,
+    UNABLE_TO_RESOLVE_JPA_UNIT,
+    AMBIGUOUS_SPRING_ENTITYMANAGER
 }

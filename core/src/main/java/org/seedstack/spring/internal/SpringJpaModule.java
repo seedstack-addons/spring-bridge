@@ -7,34 +7,23 @@
  */
 package org.seedstack.spring.internal;
 
-import javax.persistence.EntityManager;
-
+import com.google.inject.AbstractModule;
+import com.google.inject.matcher.Matchers;
 import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 import org.seedstack.seed.transaction.spi.TransactionalProxy;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.matcher.Matchers;
+import javax.persistence.EntityManager;
 
-/**
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
- */
-public class SpringJpaModule extends AbstractModule {
+class SpringJpaModule extends AbstractModule {
+    private ConfigurationProvider configurationProvider;
 
-	private ConfigurationProvider configurationProvider;
-	
-	public SpringJpaModule(ConfigurationProvider configurationProvider) {
-		this.configurationProvider = configurationProvider;
-	}
+    SpringJpaModule(ConfigurationProvider configurationProvider) {
+        this.configurationProvider = configurationProvider;
+    }
 
-
-	@Override
-	protected void configure() {
-		//Bind injected EntityManagers with a null proxy to be override by the typeListener.
-		bind(EntityManager.class).toInstance(TransactionalProxy.create(EntityManager.class, null));	
-		bindListener(Matchers.any(), new SpringEntityManagerTypeListener(configurationProvider));		
-	}
-	
-
+    @Override
+    protected void configure() {
+        bind(EntityManager.class).toInstance(TransactionalProxy.create(EntityManager.class, null));
+        bindListener(Matchers.any(), new SpringEntityManagerTypeListener(configurationProvider));
+    }
 }

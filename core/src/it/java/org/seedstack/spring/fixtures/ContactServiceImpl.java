@@ -12,10 +12,10 @@ import javax.persistence.EntityManager;
 
 public class ContactServiceImpl implements ContactService {
 
-	@Inject
-	private EntityManager entityManager;
+    @Inject
+    private EntityManager entityManager;
 
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

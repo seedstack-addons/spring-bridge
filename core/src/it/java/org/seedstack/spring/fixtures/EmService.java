@@ -9,6 +9,9 @@ package org.seedstack.spring.fixtures;
 
 public interface EmService {
 
-	void testContactTransaction();
-	void testUserTransaction();
+    void testContactTransaction();
+
+    void nestedUserTransaction();
+
+    void testUserTransaction();
 }

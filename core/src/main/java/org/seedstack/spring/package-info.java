@@ -7,7 +7,5 @@
  */
 /**
  * Contains classes allowing to bridge Seed and Spring
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+ **/
 package org.seedstack.spring;

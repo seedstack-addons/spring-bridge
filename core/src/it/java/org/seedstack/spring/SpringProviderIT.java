@@ -8,12 +8,12 @@
 package org.seedstack.spring;
 
 
-import org.seedstack.seed.it.SeedITRunner;
-import org.seedstack.spring.fixtures.Service;
-import org.seedstack.spring.fixtures.SpringRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.spring.fixtures.Service;
+import org.seedstack.spring.fixtures.SpringRepository;
 
 import javax.inject.Inject;
 import javax.inject.Named;

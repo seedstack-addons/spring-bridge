@@ -14,11 +14,11 @@ import org.seedstack.seed.Install;
 @Install
 public class Module extends AbstractModule {
 
-	@Override
-	protected void configure() {
+    @Override
+    protected void configure() {
         bind(Service.class).to(DummyService.class).in(Scopes.SINGLETON);
         bind(UserService.class).to(UserServiceImpl.class).in(Scopes.SINGLETON);
         bind(ContactService.class).to(ContactServiceImpl.class).in(Scopes.SINGLETON);
-	}
+    }
 
 }

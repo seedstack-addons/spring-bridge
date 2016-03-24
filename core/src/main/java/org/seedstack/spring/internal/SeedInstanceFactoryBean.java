@@ -7,12 +7,12 @@
  */
 package org.seedstack.spring.internal;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import org.springframework.beans.factory.FactoryBean;
 
-import javax.inject.Inject;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,9 +21,9 @@ import java.lang.reflect.Proxy;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 class SeedInstanceFactoryBean implements FactoryBean<Object> {
+    // using Guice annotation to prevent Spring from complaining
     @Inject
     private static Injector injector;
-
     private String classname;
     private String qualifier;
     private boolean proxy = true;
