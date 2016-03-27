@@ -1,6 +1,7 @@
 ---
 title: "Transactions"
 name: "Spring bridge"
+repo: "https://github.com/seedstack/spring-bridge-addon"
 tags:
     - "spring"
     - "bridge"
