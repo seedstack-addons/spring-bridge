@@ -2,9 +2,9 @@
 title: "Basics"
 name: "Spring bridge"
 repo: "https://github.com/seedstack/spring-bridge-addon"
-author: "SeedStack"
+date: 2015-11-25
+author: Adrien LAUER
 description: "Integrates various Spring framework technologies with SeedStack to enable composing hybrid applications."
-min-version: "15.11+"
 backend: true
 weight: -1
 tags:
