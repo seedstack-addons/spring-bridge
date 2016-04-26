@@ -10,49 +10,46 @@
  */
 package org.seedstack.spring.internal;
 
+import org.seedstack.seed.SeedException;
 import org.seedstack.seed.transaction.spi.TransactionalLink;
 import org.springframework.transaction.TransactionStatus;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-/**
- * SpringTransactionStatusLink
- */
 class SpringTransactionStatusLink implements TransactionalLink<TransactionStatus> {
-
-    private final ThreadLocal<Deque<TransactionStatus>> transactionStatusThreadLocal;
-
-    SpringTransactionStatusLink() {
-        transactionStatusThreadLocal = new ThreadLocal<Deque<TransactionStatus>>() {
-            @Override
-            protected Deque<TransactionStatus> initialValue() {
-                return new ArrayDeque<TransactionStatus>();
-            }
-        };
-    }
-
+    private final ThreadLocal<Deque<TransactionStatus>> perThreadObjectContainer = new ThreadLocal<Deque<TransactionStatus>>() {
+        @Override
+        protected Deque<TransactionStatus> initialValue() {
+            return new ArrayDeque<TransactionStatus>();
+        }
+    };
 
     @Override
     public TransactionStatus get() {
-        TransactionStatus peek = transactionStatusThreadLocal.get().peek();
+        TransactionStatus peek = perThreadObjectContainer.get().peek();
         if (peek == null) {
-            throw new IllegalStateException("Attempt to get a Spring TransactionStatus without a transaction");
+            throw SeedException.createNew(SpringErrorCode.NO_ACTIVE_SPRING_TRANSACTION);
         }
 
         return peek;
     }
 
 
+    TransactionStatus getCurrentTransaction() {
+        return perThreadObjectContainer.get().peek();
+    }
+
     void push(TransactionStatus transactionStatus) {
-        transactionStatusThreadLocal.get().push(transactionStatus);
+        perThreadObjectContainer.get().push(transactionStatus);
     }
 
     TransactionStatus pop() {
-        return transactionStatusThreadLocal.get().pop();
-    }
-
-    TransactionStatus getCurrentTransaction() {
-        return transactionStatusThreadLocal.get().peek();
+        Deque<TransactionStatus> transactionStatuses = perThreadObjectContainer.get();
+        TransactionStatus transactionStatus = transactionStatuses.pop();
+        if (transactionStatuses.isEmpty()) {
+            perThreadObjectContainer.remove();
+        }
+        return transactionStatus;
     }
 }

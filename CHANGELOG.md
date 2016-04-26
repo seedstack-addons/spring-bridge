@@ -1,6 +1,7 @@
-# Version 2.2.1 (?)
+# Version 2.2.1 (2016-04-26)
 
-* [chg] Update Seed dependency to 2.3.0
+* [chg] Update for SeedStack 16.4.
+* [fix] Correctly cleanup `ThreadLocal` in `SpringTransactionStatusLink`.
 
 # Version 2.2.0 (2015-11-25)
 
