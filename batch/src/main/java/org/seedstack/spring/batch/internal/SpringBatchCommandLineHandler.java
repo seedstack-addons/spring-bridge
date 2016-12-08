@@ -83,7 +83,7 @@ public class SpringBatchCommandLineHandler implements CommandLineHandler {
 
     private JobParameters getJobParameters() {
         if (optionJobParameters != null && !optionJobParameters.isEmpty()) {
-            Map<String, JobParameter> mapJobParameter = new HashMap<String, JobParameter>();
+            Map<String, JobParameter> mapJobParameter = new HashMap<>();
 
             for (Map.Entry<String, String> stringJobParameterEntry : optionJobParameters.entrySet()) {
                 mapJobParameter.put(stringJobParameterEntry.getKey(), new JobParameter(stringJobParameterEntry.getValue()));

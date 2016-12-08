@@ -8,8 +8,8 @@
 package org.seedstack.spring.internal;
 
 import org.apache.commons.lang.StringUtils;
+import org.seedstack.seed.Application;
 import org.seedstack.seed.SeedException;
-import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 import org.seedstack.seed.transaction.spi.TransactionalLink;
 import org.springframework.orm.jpa.EntityManagerHolder;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -20,21 +20,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
-    private static final String GENERIC_UNIT_NAME_PROPERTY = "org.seedstack.jpa.unit-name";
+    private static final String GENERIC_UNIT_NAME_PROPERTY = "seedstack.jpaUnitName";
     private static final String HIBERNATE_UNIT_NAME_PROPERTY = "hibernate.ejb.persistenceUnitName";
-    static final String JPA_UNIT_PROPERTY = "jpa-unit";
+    static final String JPA_UNIT_PROPERTY = "jpaUnit";
 
-    private final ConfigurationProvider configurationProvider;
+    private final Application application;
     private final Class<?> currentClass;
 
-    SpringEntityManagerLink(ConfigurationProvider configuration, Class<?> currentClass) {
-        this.configurationProvider = configuration;
+    SpringEntityManagerLink(Application application, Class<?> currentClass) {
+        this.application = application;
         this.currentClass = currentClass;
     }
 
     @Override
     public EntityManager get() {
-        Map<String, EntityManagerFactory> mapEntityManagerFactoryByUnit = new HashMap<String, EntityManagerFactory>();
+        Map<String, EntityManagerFactory> mapEntityManagerFactoryByUnit = new HashMap<>();
         for (Map.Entry<Object, Object> entry : TransactionSynchronizationManager.getResourceMap().entrySet()) {
             if (entry.getKey() instanceof EntityManagerFactory) {
                 EntityManagerFactory emf = (EntityManagerFactory) entry.getKey();
@@ -51,7 +51,7 @@ class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
         }
 
         EntityManager entityManager;
-        String unitFromClass = configurationProvider.getConfiguration(currentClass).getString(JPA_UNIT_PROPERTY);
+        String unitFromClass = application.getConfiguration(currentClass).get(JPA_UNIT_PROPERTY);
         if (StringUtils.isBlank(unitFromClass)) {
             if (mapEntityFactories.size() > 1) {
                 throw SeedException

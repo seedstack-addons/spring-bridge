@@ -7,14 +7,12 @@
  */
 package org.seedstack.spring.internal;
 
-import org.seedstack.seed.ErrorCode;
+import org.seedstack.shed.exception.ErrorCode;
 
 enum SpringErrorCode implements ErrorCode {
-
-    NO_SPRING_ENTITYMANAGER,
-    UNKNOWN_SPRING_ENTITYMANAGER,
-    UNABLE_TO_RESOLVE_JPA_UNIT,
+    AMBIGUOUS_SPRING_ENTITYMANAGER,
     NO_ACTIVE_SPRING_TRANSACTION,
-    AMBIGUOUS_SPRING_ENTITYMANAGER
-
+    NO_SPRING_ENTITYMANAGER,
+    UNABLE_TO_RESOLVE_JPA_UNIT,
+    UNKNOWN_SPRING_ENTITYMANAGER
 }
