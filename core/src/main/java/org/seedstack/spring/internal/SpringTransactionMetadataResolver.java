@@ -8,10 +8,11 @@
 package org.seedstack.spring.internal;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;
 import org.seedstack.spring.SpringTransactionManager;
+
+import java.util.Optional;
 
 /**
  * This {@link org.seedstack.seed.transaction.spi.TransactionMetadataResolver} resolves metadata for transactions marked
@@ -20,12 +21,12 @@ import org.seedstack.spring.SpringTransactionManager;
 class SpringTransactionMetadataResolver implements TransactionMetadataResolver {
     @Override
     public TransactionMetadata resolve(MethodInvocation methodInvocation, TransactionMetadata defaults) {
-        SpringTransactionManager springTransactionManager = SeedReflectionUtils.getMetaAnnotationFromAncestors(methodInvocation.getMethod(), SpringTransactionManager.class);
+        Optional<SpringTransactionManager> springTransactionManager = SpringTransactionManagerResolver.INSTANCE.apply(methodInvocation.getMethod());
 
-        if (springTransactionManager != null) {
+        if (springTransactionManager.isPresent()) {
             TransactionMetadata result = new TransactionMetadata();
             result.setHandler(SpringTransactionHandler.class);
-            result.setResource(springTransactionManager.value());
+            result.setResource(springTransactionManager.get().value());
             return result;
         }
 

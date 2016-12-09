@@ -6,10 +6,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-[org.seedstack.spring]
-manage-transactions = true
-test-value = Hello
-test-other-value = 5
-
-[org.seedstack.spring.fixtures.UserServiceImpl]
-jpa-unit = default2
+spring:
+  manageJpa: true

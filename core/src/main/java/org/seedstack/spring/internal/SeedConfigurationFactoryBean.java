@@ -7,11 +7,13 @@
  */
 package org.seedstack.spring.internal;
 
-import org.apache.commons.configuration.Configuration;
+import org.seedstack.coffig.Coffig;
 import org.springframework.beans.factory.FactoryBean;
 
+import java.util.Optional;
+
 class SeedConfigurationFactoryBean implements FactoryBean<Object> {
-    static Configuration configuration;
+    static Coffig configuration;
     private String key;
     private String defaultValue;
     private boolean mandatory = true;
@@ -21,15 +23,14 @@ class SeedConfigurationFactoryBean implements FactoryBean<Object> {
         if (key == null) {
             throw new IllegalArgumentException("Property key is required for SeedConfigurationFactoryBean");
         } else {
-            String value = configuration.getString(key);
-            if (value == null) {
+            Optional<String> value = configuration.getOptional(String.class, key);
+            if (value.isPresent()) {
+                return value.get();
+            } else {
                 if (defaultValue == null && mandatory) {
                     throw new IllegalArgumentException("Configuration value " + key + " is mandatory and has no value nor default value");
                 }
-
                 return defaultValue;
-            } else {
-                return value;
             }
         }
     }

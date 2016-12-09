@@ -14,9 +14,9 @@ import javax.inject.Provider;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 class SpringBeanProvider<T> implements Provider<T> {
-    final BeanFactory beanFactory;
-    final Class<T> type;
-    final String name;
+    private final BeanFactory beanFactory;
+    private final Class<T> type;
+    private final String name;
 
     SpringBeanProvider(Class<T> type, String name, BeanFactory beanFactory) {
         this.type = checkNotNull(type, "type");

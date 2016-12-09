@@ -9,21 +9,21 @@ package org.seedstack.spring.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
-import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
-import org.seedstack.seed.transaction.spi.TransactionalProxy;
+import org.seedstack.seed.Application;
+import org.seedstack.seed.core.internal.transaction.TransactionalProxy;
 
 import javax.persistence.EntityManager;
 
 class SpringJpaModule extends AbstractModule {
-    private ConfigurationProvider configurationProvider;
+    private Application application;
 
-    SpringJpaModule(ConfigurationProvider configurationProvider) {
-        this.configurationProvider = configurationProvider;
+    SpringJpaModule(Application application) {
+        this.application = application;
     }
 
     @Override
     protected void configure() {
         bind(EntityManager.class).toInstance(TransactionalProxy.create(EntityManager.class, null));
-        bindListener(Matchers.any(), new SpringEntityManagerTypeListener(configurationProvider));
+        bindListener(Matchers.any(), new SpringEntityManagerTypeListener(application));
     }
 }

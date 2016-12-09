@@ -18,12 +18,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 class SpringTransactionStatusLink implements TransactionalLink<TransactionStatus> {
-    private final ThreadLocal<Deque<TransactionStatus>> perThreadObjectContainer = new ThreadLocal<Deque<TransactionStatus>>() {
-        @Override
-        protected Deque<TransactionStatus> initialValue() {
-            return new ArrayDeque<TransactionStatus>();
-        }
-    };
+    private final ThreadLocal<Deque<TransactionStatus>> perThreadObjectContainer = ThreadLocal.withInitial(ArrayDeque::new);
 
     @Override
     public TransactionStatus get() {
@@ -34,7 +29,6 @@ class SpringTransactionStatusLink implements TransactionalLink<TransactionStatus
 
         return peek;
     }
-
 
     TransactionStatus getCurrentTransaction() {
         return perThreadObjectContainer.get().peek();

@@ -10,17 +10,17 @@ package org.seedstack.spring.internal;
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
-import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
+import org.seedstack.seed.Application;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.lang.reflect.Field;
 
 class SpringEntityManagerTypeListener implements TypeListener {
-    private ConfigurationProvider configurationProvider;
+    private Application application;
 
-    SpringEntityManagerTypeListener(ConfigurationProvider configurationProvider) {
-        this.configurationProvider = configurationProvider;
+    SpringEntityManagerTypeListener(Application application) {
+        this.application = application;
     }
 
     @Override
@@ -29,7 +29,7 @@ class SpringEntityManagerTypeListener implements TypeListener {
             for (Field field : c.getDeclaredFields()) {
                 if (EntityManager.class.isAssignableFrom(field.getType())
                         && field.getAnnotation(Inject.class) != null) {
-                    encounter.register(new SpringEntityManagerMembersInjector<I>(field, configurationProvider, type.getRawType()));
+                    encounter.register(new SpringEntityManagerMembersInjector<>(field, application, type.getRawType()));
                 }
             }
         }

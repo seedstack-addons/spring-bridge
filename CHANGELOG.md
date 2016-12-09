@@ -1,3 +1,8 @@
+# Version 3.0.0 (2016-12-??)
+
+* [brk] Moved to SeedStack 16.11 new configuration system.
+* [brk] JPA unit property used to specify an explicit unit name has been renamed from `org.seedstack.jpa.unit-name` to `seedstack.jpaUnitName`.
+
 # Version 2.2.1 (2016-04-26)
 
 * [chg] Update for SeedStack 16.4.

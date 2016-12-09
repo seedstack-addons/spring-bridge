@@ -21,13 +21,13 @@
 
     <bean id="service4" class="org.seedstack.spring.fixtures.DummyService">
         <property name="configurationValue">
-            <seed:configuration key="org.seedstack.spring.test-value"/>
+            <seed:configuration key="someProperties.testValue"/>
         </property>
         <property name="otherConfigurationValue">
-            <seed:configuration key="org.seedstack.spring.test-other-value"/>
+            <seed:configuration key="someProperties.testOtherValue"/>
         </property>
         <property name="defaultConfigurationValue">
-            <seed:configuration key="org.seedstack.spring.test-default-value" default="1.5"/>
+            <seed:configuration key="someProperties.testDefaultValue" default="1.5"/>
         </property>
     </bean>
 </beans>

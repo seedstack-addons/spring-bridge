@@ -23,7 +23,7 @@ public class FlatFileBatchDemo {
 
         Job job = applicationContext.getBean(Job.class);
 
-        Map<String, JobParameter> jobParametersMap = new HashMap<String, JobParameter>();
+        Map<String, JobParameter> jobParametersMap = new HashMap<>();
 
         jobParametersMap.put("file", new JobParameter(argv[1]));
 

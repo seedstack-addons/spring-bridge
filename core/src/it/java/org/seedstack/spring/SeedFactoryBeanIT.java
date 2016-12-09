@@ -27,9 +27,9 @@ import javax.inject.Named;
 import java.lang.reflect.Proxy;
 
 public class SeedFactoryBeanIT {
-    static Kernel kernel;
-    ApplicationContext context;
-    Holder holder;
+    private static Kernel kernel;
+    private ApplicationContext context;
+    private Holder holder;
 
     static class Holder {
         @Inject

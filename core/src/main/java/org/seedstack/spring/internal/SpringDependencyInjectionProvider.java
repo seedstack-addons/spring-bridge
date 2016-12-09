@@ -17,7 +17,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 
 class SpringDependencyInjectionProvider implements DependencyInjectionProvider {
-
     @Override
     public boolean canHandle(Class<?> injectionDefinition) {
         return ConfigurableListableBeanFactory.class.isAssignableFrom(injectionDefinition) || ConfigurableApplicationContext.class.isAssignableFrom(injectionDefinition);

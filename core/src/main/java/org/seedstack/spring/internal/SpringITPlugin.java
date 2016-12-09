@@ -9,7 +9,6 @@ package org.seedstack.spring.internal;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang.StringUtils;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
 import org.junit.runners.model.FrameworkMethod;
@@ -41,7 +40,7 @@ public class SpringITPlugin implements ITRunnerPlugin {
     }
 
     @Override
-    public Map<String, String> provideDefaultConfiguration(TestClass testClass, FrameworkMethod frameworkMethod) {
+    public Map<String, String> provideConfiguration(TestClass testClass, FrameworkMethod frameworkMethod) {
         Map<String, String> defaultConfiguration = Maps.newHashMap();
         WithApplicationContexts annotation;
 
@@ -52,8 +51,8 @@ public class SpringITPlugin implements ITRunnerPlugin {
         }
 
         if (annotation != null) {
-            defaultConfiguration.put(SpringPlugin.SPRING_PLUGIN_CONFIGURATION_PREFIX + ".autodetect", "false");
-            defaultConfiguration.put(SpringPlugin.SPRING_PLUGIN_CONFIGURATION_PREFIX + ".contexts", StringUtils.join(annotation.value(), ","));
+            defaultConfiguration.put("spring.autodetect", "false");
+            defaultConfiguration.put("spring.contexts", String.join(",", annotation.value()));
         }
 
         return defaultConfiguration;

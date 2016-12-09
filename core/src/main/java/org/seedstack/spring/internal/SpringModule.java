@@ -47,7 +47,7 @@ class SpringModule extends AbstractModule {
 
     SpringModule(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
-        this.beanDefinitions = new HashMap<Class<?>, Map<String, SpringBeanDefinition>>();
+        this.beanDefinitions = new HashMap<>();
     }
 
     @Override
@@ -143,7 +143,7 @@ class SpringModule extends AbstractModule {
     private void addBeanDefinition(Class<?> beanClass, SpringBeanDefinition springBeanDefinition) {
         Map<String, SpringBeanDefinition> beansOfType = this.beanDefinitions.get(beanClass);
         if (beansOfType == null) {
-            beansOfType = new HashMap<String, SpringBeanDefinition>();
+            beansOfType = new HashMap<>();
             this.beanDefinitions.put(beanClass, beansOfType);
         }
 
