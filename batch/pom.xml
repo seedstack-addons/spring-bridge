@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.seedstack.addons.spring</groupId>
         <artifactId>spring-bridge</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>spring-bridge-batch</artifactId>

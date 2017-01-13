@@ -1,3 +1,7 @@
+# Version 3.0.1 (2017-01-13)
+
+* [fix] Fix ClassNotFoundException on EntityManager when JPA is not in the classpath. 
+
 # Version 3.0.0 (2016-12-15)
 
 * [brk] Update to SeedStack 16.11 new configuration system.

@@ -12,6 +12,7 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.spi.DependencyInjectionProvider;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
+import org.seedstack.shed.reflect.Classes;
 import org.seedstack.spring.SpringConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class SpringPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringPlugin.class);
     private static final String APPLICATION_CONTEXT_REGEX = ".*-context.xml$";
     private final Set<String> applicationContextsPaths = new HashSet<>();
+    private final boolean jpaPresent = Classes.optional("javax.persistence.EntityManager").isPresent();
     private ClassPathXmlApplicationContext globalApplicationContext;
     private SpringConfig springConfig;
 
@@ -82,7 +84,7 @@ public class SpringPlugin extends AbstractSeedPlugin {
 
     @Override
     public Object nativeOverridingUnitModule() {
-        if (springConfig.isManageJpa()) {
+        if (jpaPresent && springConfig.isManageJpa()) {
             return new SpringJpaModule(getApplication());
         } else {
             return null;
