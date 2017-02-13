@@ -1,6 +1,7 @@
 ---
-title: "Batch"
-name: "Spring bridge"
+title: "Spring batch"
+parent: "Spring bridge"
+weight: -1
 repo: "https://github.com/seedstack/spring-bridge-addon"
 tags:
     - "batch"
