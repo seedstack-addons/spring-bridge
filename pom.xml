@@ -24,9 +24,9 @@
 
     <properties>
         <seed.version>3.1.0</seed.version>
-        <business.version>3.0.2-SNAPSHOT</business.version>
-        <jdbc.version>3.0.1-SNAPSHOT</jdbc.version>
-        <jpa-addon.version>3.0.1-SNAPSHOT</jpa-addon.version>
+        <business.version>3.0.2</business.version>
+        <jdbc.version>3.0.1</jdbc.version>
+        <jpa-addon.version>3.0.1</jpa-addon.version>
         <spring.version>4.3.6.RELEASE</spring.version>
         <spring-batch.version>3.0.7.RELEASE</spring-batch.version>
 
