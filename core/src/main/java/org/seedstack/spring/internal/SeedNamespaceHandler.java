@@ -14,16 +14,18 @@ import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 /**
- * This class handles the SEED Spring namespace.
+ * This class handles the SeedStack Spring namespace.
  */
 public class SeedNamespaceHandler extends NamespaceHandlerSupport {
     private static final String INSTANCE_LOCAL_NAME = "instance";
     private static final String CONFIGURATION_LOCAL_NAME = "configuration";
+    private static final String DATA_SOURCE_LOCAL_NAME = "datasource";
 
     @Override
     public void init() {
         registerBeanDefinitionParser(INSTANCE_LOCAL_NAME, new SeedInstanceDefinitionParser());
         registerBeanDefinitionParser(CONFIGURATION_LOCAL_NAME, new SeedConfigurationDefinitionParser());
+        registerBeanDefinitionParser(DATA_SOURCE_LOCAL_NAME, new SeedDataSourceDefinitionParser());
     }
 
     private class SeedInstanceDefinitionParser extends AbstractSingleBeanDefinitionParser {
@@ -37,9 +39,9 @@ public class SeedNamespaceHandler extends NamespaceHandlerSupport {
             builder.getRawBeanDefinition().setBeanClass(SeedInstanceFactoryBean.class);
             builder.getRawBeanDefinition().setAttribute("id", element.getAttribute("id"));
 
-            String classname = element.getAttribute("class");
-            if (StringUtils.hasText(classname)) {
-                builder.addPropertyValue("classname", classname);
+            String className = element.getAttribute("class");
+            if (StringUtils.hasText(className)) {
+                builder.addPropertyValue("classname", className);
             }
 
             String qualifier = element.getAttribute("qualifier");
@@ -78,6 +80,24 @@ public class SeedNamespaceHandler extends NamespaceHandlerSupport {
             String mandatory = element.getAttribute("mandatory");
             if (StringUtils.hasText(mandatory)) {
                 builder.addPropertyValue("mandatory", Boolean.parseBoolean(mandatory));
+            }
+        }
+    }
+
+    private class SeedDataSourceDefinitionParser extends AbstractSingleBeanDefinitionParser {
+        @Override
+        protected Class<?> getBeanClass(Element element) {
+            return SeedDataSourceFactoryBean.class;
+        }
+
+        @Override
+        protected void doParse(Element element, BeanDefinitionBuilder builder) {
+            builder.getRawBeanDefinition().setBeanClass(SeedDataSourceFactoryBean.class);
+            builder.getRawBeanDefinition().setAttribute("id", element.getAttribute("id"));
+
+            String name = element.getAttribute("name");
+            if (StringUtils.hasText(name)) {
+                builder.addPropertyValue("name", name);
             }
         }
     }

@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.seedstack.addons.spring</groupId>
         <artifactId>spring-bridge</artifactId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>spring-bridge-core</artifactId>
@@ -52,7 +52,13 @@
 			<version>${seed.version}</version>
 			<optional>true</optional>
 		</dependency>
-        <dependency>
+		<dependency>
+			<groupId>org.seedstack.addons.jdbc</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>${jdbc.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>

@@ -7,10 +7,12 @@
  */
 package org.seedstack.spring.internal;
 
+import com.google.common.collect.Lists;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.spi.DependencyInjectionProvider;
+import org.seedstack.jdbc.spi.JdbcProvider;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.shed.reflect.Classes;
 import org.seedstack.spring.SpringConfig;
@@ -33,6 +35,7 @@ public class SpringPlugin extends AbstractSeedPlugin {
     private static final String APPLICATION_CONTEXT_REGEX = ".*-context.xml$";
     private final Set<String> applicationContextsPaths = new HashSet<>();
     private final boolean jpaPresent = Classes.optional("javax.persistence.EntityManager").isPresent();
+    private final boolean jdbcProviderPresent = Classes.optional("org.seedstack.jdbc.spi.JdbcProvider").isPresent();
     private ClassPathXmlApplicationContext globalApplicationContext;
     private SpringConfig springConfig;
 
@@ -44,6 +47,15 @@ public class SpringPlugin extends AbstractSeedPlugin {
     @Override
     public String pluginPackageRoot() {
         return "META-INF.spring";
+    }
+
+    @Override
+    protected Collection<Class<?>> dependencies() {
+        if (jdbcProviderPresent) {
+            return Lists.newArrayList(JdbcProvider.class);
+        } else {
+            return Lists.newArrayList();
+        }
     }
 
     @Override
@@ -70,6 +82,10 @@ public class SpringPlugin extends AbstractSeedPlugin {
                 applicationContextsPaths.add(explicitContext);
                 LOGGER.trace("Configured spring context at " + explicitContext);
             }
+        }
+
+        if (jdbcProviderPresent) {
+            SeedDataSourceFactoryBean.jdbcProvider = initContext.dependency(JdbcProvider.class);
         }
 
         LOGGER.info("Initializing spring context(s) " + applicationContextsPaths);

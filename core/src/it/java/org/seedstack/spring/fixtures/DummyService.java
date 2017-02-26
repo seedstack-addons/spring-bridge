@@ -7,11 +7,14 @@
  */
 package org.seedstack.spring.fixtures;
 
+import javax.sql.DataSource;
+
 public class DummyService implements Service {
     private String from = "?";
     private String configurationValue = "?";
     private int anotherConfigurationValue = 0;
     private double defaultConfigurationValue;
+    private DataSource dataSource;
 
     public void setFrom(String from) {
         this.from = from;
@@ -43,5 +46,13 @@ public class DummyService implements Service {
 
     public double getDefaultConfigurationValue() {
         return defaultConfigurationValue;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }

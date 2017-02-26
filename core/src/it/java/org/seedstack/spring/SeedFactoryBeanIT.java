@@ -24,6 +24,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
 
 public class SeedFactoryBeanIT {
@@ -94,5 +95,12 @@ public class SeedFactoryBeanIT {
         Assertions.assertThat(((DummyService) context.getBean("service4")).getConfigurationValue()).isEqualTo("Hello");
         Assertions.assertThat(((DummyService) context.getBean("service4")).getOtherConfigurationValue()).isEqualTo(5);
         Assertions.assertThat(((DummyService) context.getBean("service4")).getDefaultConfigurationValue()).isEqualTo(1.5);
+    }
+
+    @Test
+    public void datasource_injection_is_working() throws Exception {
+        DataSource ds = ((DummyService) context.getBean("service4")).getDataSource();
+        Assertions.assertThat(ds).isNotNull();
+        Assertions.assertThat(ds.getConnection()).isNotNull();
     }
 }

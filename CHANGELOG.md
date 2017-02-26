@@ -1,3 +1,7 @@
+# Version 3.1.0 (2017-02-26)
+
+* [new] Add the ability to retrieve a SeedStack JDBC data source with the `seed:datasource` XML element.
+
 # Version 3.0.1 (2017-01-13)
 
 * [fix] Fix ClassNotFoundException on EntityManager when JPA is not in the classpath. 
