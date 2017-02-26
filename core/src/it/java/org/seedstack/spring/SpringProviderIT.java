@@ -28,6 +28,10 @@ public class SpringProviderIT {
     @Named("springRepository")
     SpringRepository springRepository;
 
+    @Inject
+    @Named("configBean")
+    String configValue;
+
     @Test
     public void can_get_spring_bean_by_interface_type() {
         Assertions.assertThat(service).isNotNull();
@@ -38,5 +42,10 @@ public class SpringProviderIT {
     public void scanned_components_are_detected() {
         Assertions.assertThat(springRepository).isNotNull();
         Assertions.assertThat(springRepository.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void bean_can_be_identified() throws Exception {
+        Assertions.assertThat(configValue).isEqualTo("titi");
     }
 }
