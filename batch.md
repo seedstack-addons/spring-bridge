@@ -3,11 +3,6 @@ title: "Spring batch"
 parent: "Spring bridge"
 weight: -1
 repo: "https://github.com/seedstack/spring-bridge-addon"
-tags:
-    - "batch"
-    - "spring"
-    - "job"
-    - "bridge"
 zones:
     - Addons
 menu:

@@ -4,11 +4,7 @@ repo: "https://github.com/seedstack/spring-bridge-addon"
 author: Adrien LAUER
 description: "Integrates various Spring framework technologies with SeedStack to enable composing hybrid applications."
 tags:
-    - "spring"
-    - "bridge"
-    - "bean"
-    - "injection"
-    - "context"
+    - injection
 zones:
     - Addons
 menu:

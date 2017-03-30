@@ -4,10 +4,7 @@ parent: "Spring bridge"
 weight: -1
 repo: "https://github.com/seedstack/spring-bridge-addon"
 tags:
-    - "spring"
-    - "bridge"
-    - "transaction"
-    - "jpa"
+    - transactions
 zones:
     - Addons
 menu:
