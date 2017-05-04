@@ -12,7 +12,9 @@ menu:
         weight: 20
 ---
 
-When using Spring framework along SeedStack, you might need to trigger transactions accross framework boundaries. The Spring bridge add-on provides a solution that goes both ways and lets you choose beteween either:
+When using Spring framework along SeedStack, you might need to trigger transactions across framework boundaries.<!--more-->
+
+The Spring bridge add-on provides a solution that goes both ways and lets you choose between either:
 
 * Managing Spring transactions from Seed code,
 * Managing Seed transactions from Spring code.

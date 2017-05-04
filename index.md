@@ -13,7 +13,7 @@ menu:
 ---
 
 Seed Spring support is a bi-directional injection bridge between Seed managed instances and Spring beans. It allows to
-inject Spring beans in Seed instances and Seed instances as Spring beans.
+inject Spring beans in Seed instances and Seed instances as Spring beans.<!--more-->
 
 Additionally, this support fills in a gap between Seed and Spring code allowing for instance to initiate a Spring-based 
 transaction from Seed code. Tt also provides a Spring namespace handler to make its features as easy to use as possible.

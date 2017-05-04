@@ -11,7 +11,11 @@ menu:
 ---
 
 A specific Spring-Batch integration is also provided. Spring-Batch is a comprehensive solution to implement full-featured
-batch jobs in Java. More information about Spring Batch on [http://docs.spring.io/spring-batch/](http://docs.spring.io/spring-batch/).
+batch jobs in Java.<!--more-->
+ 
+More information about Spring Batch can be found [here](http://docs.spring.io/spring-batch/).
+
+# Dependency 
 
 {{< dependency g="org.seedstack.addons.spring" a="spring-bridge-batch" >}}
 
