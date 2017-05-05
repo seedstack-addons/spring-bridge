@@ -12,60 +12,65 @@ menu:
         weight: 20
 ---
 
-When using Spring framework along SeedStack, you might need to trigger transactions across framework boundaries.<!--more-->
+The SeedStack/Spring bridge add-on allows to trigger transactions across framework boundaries.<!--more-->
 
-The Spring bridge add-on provides a solution that goes both ways and lets you choose between either:
+You can:
 
-* Managing Spring transactions from Seed code,
-* Managing Seed transactions from Spring code.
+* Manage Spring transactions from SeedStack code,
+* Manage SeedStack transactions from Spring code.
 
 
-# Seed-managed transactions
+# SeedStack-managed transactions
 
 You can specify a Spring-based transaction handler in your Seed transaction demarcation by adding the
-`@SpringTransactionManager` annotation besides the `@Transactional` one.
+{{< java "org.seedstack.spring.SpringTransactionManager" "@">}} annotation next to the {{< java "org.seedstack.seed.transaction.Transactional" "@">}} one.
 
-You can define any valid Spring transaction manager in any Spring context known by Seed Spring support. Example:
+Consider the following Spring transaction manager:
 		
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+```xml
+<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="someEmf" />
+</bean>
+```
 
-The value of the `@SpringTransactionManager` annotation is used to choose the right transaction manager. Its default
-value is `transactionManager`. Example of use in an integration test:
+You can trigger transactions on this Spring transaction manager from SeedStack as below:
 
-	@RunWith(SeedITRunner.class)
-	public class SpringTransactionHandlerIT {
-	
-		@Inject
-		@Named("customerDao")
-		CustomerDao customerDao;
-	
-		@Test
-		@Transactional
-		@SpringTransactionManager("myTransactionManager")
-		public void testTransactional() {
-			Assertions.assertThat(customerDao).isNotNull();
-			Customer customer = new Customer("john", "doe", "john.doe@gmail.com",
-					null);
-			customerDao.save(customer);
-			customerDao.delete(customer);
-			Assertions.assertThat(customer).isNotNull();
-		}
+```java
+public class SomeClass {
+    @Inject
+    @Named("customerDao")
+    private CustomerDao customerDao;
 
-	}
+    @Transactional
+    @SpringTransactionManager
+    public void someMethod() {
+        // do something transactional with the customerDao Spring bean
+    }
+}
+```
+
+{{% callout info %}}
+The default name of the transaction manager in the {{< java "org.seedstack.spring.SpringTransactionManager" "@">}} annotation
+parameter is `transactionManager` but you can specify a custom name if needed.
+{{% /callout %}}
 	
 # Spring-managed transactions
 
-Seed has the ability to inject a Spring-configured **JPA EntityManger**  in your Seed components. In that case, Spring will be managing all the JPA transactions. Seed code will be executed whithin Spring transactions. This feature can be very useful in batch jobs, when you need to let Spring manage transactions for performance reasons.
+Seed has the ability to inject a Spring-configured **JPA EntityManger**  in your SeedStack classes. In that case, Spring 
+is be managing the JPA transactions. SeedStack code is executed within the Spring transaction. This feature can be very 
+useful in batch jobs, when you need to let Spring batch manage transactions for performance reasons.
 
 ## Spring configuration
-As stated above Spring will be the one that will manage all JPA features (mapping, transaction ...). As such, your Spring context files need to be configured explicitly with JPA context (JPA Datasources, TransactionManagers, EntityManagerFactories).
 
-## Seed configuration
-Seed JPA add-on can be removed if possible or at least left unconfigured. Add the following configuration for Spring bridge add-on instead:
+As stated above Spring will be the one that will manage all JPA features (mapping, transaction ...). As such, your 
+Spring context files need contain a complete JPA configuration (datasource + entity manager factory + transaction manager).
 
-```ini
-[org.seedstack.spring]
-manage-transactions = true
+## SeedStack configuration
+
+SeedStack JPA add-on should be removed if possible or at least left un-configured. Additionally, the SeedStack/Spring 
+bridge must be configured as below:
+
+```yaml
+spring:
+  manageJpa: true
 ```

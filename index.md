@@ -12,109 +12,167 @@ menu:
         weight: 10
 ---
 
-Seed Spring support is a bi-directional injection bridge between Seed managed instances and Spring beans. It allows to
-inject Spring beans in Seed instances and Seed instances as Spring beans.<!--more-->
+SeedStack Spring bridge add-on is a bi-directional injection bridge between SeedStack (Guice) and Spring. It allows to
+inject Spring beans with Guice and vice-versa.<!--more-->
 
-Additionally, this support fills in a gap between Seed and Spring code allowing for instance to initiate a Spring-based 
-transaction from Seed code. Tt also provides a Spring namespace handler to make its features as easy to use as possible.
+# Dependency
 
 {{< dependency g="org.seedstack.addons.spring" a="spring-core" >}}
 
-# Spring to Seed
+# Configuration
 
-Any Spring context located in the `META-INF/spring` classpath directory and named with the pattern `*-context.xml` will
-be autodetected by Seed. You can turn off auto detection with the following configuration property:
- 
-    org.seedstack.spring.autodetect = false
+{{% config p="spring" %}}
+```yaml
+spring:
+  # If true auto-detection of XML files in META-INF/spring ending with *-context.xml is enabled (defaults to true)
+  autodetect: (boolean) 
+  # Classpath locations of Spring XML files to load explicitly (in addition to autodetected ones if any) 
+  contexts: (List<String>)
+  # If true, Spring-managed JPA EntityManager will be injected instead of the SeedStack one (defaults to true)
+  manageJpa: (boolean)
+```
+{{% /config %}}    
+
+# Usage
+
+{{% callout info %}}
+By default, the add-on detects all XML files named `*-context.xml` located in the `META-INF/spring` classpath location 
+and aggregates them into a global Spring context. This behavior can be changed with the following configuration:
+{{% /callout %}}
+
+## Inject Spring beans in Guice instances
+
+The add-on scans the Spring context built from detected and/or explicitly listed XML files and makes every bean injectable
+through Guice with:
+
+* The bean class and the bean name,
+* The bean parent class (except Object) and the bean name,
+* Any bean directly implemented interface and the bean name.
+
+Consider the following example:
+
+```java
+public class SomeClass {
+    @Inject 
+    @Named("theBeanId") 
+    private SomeBeanClass bean1;
     
-You can add custom contexts located anywhere in the classpath with the following configuration property:
+    @Inject 
+    @Named("theBeanId") 
+    private SomeBeanParentClass bean2;
     
-    org.seedstack.spring.contexts = /resource/path/to/context1.xml, /resource/path/to/context2.xml
+    @Inject 
+    @Named("theBeanId") 
+    private SomeBeanImplementedInterface bean3;
+}
+```
 
-You can inject any Spring bean from contexts detected by Seed in any Seed injectable component. You can inject using the 
-bean Class and the bean name: 
+{{% callout info %}}
+Note that you always need to qualify your injection with the bean identifier (`@Named("theBeanId")`).
+{{% /callout %}}
 
-    @Inject @Named("theBeanId") BeanClass bean;
+## Create Guice instances in Spring context
 
-You can inject using the bean parent's Class (if not Object) and the bean name: 
-    
-    @Inject @Named("theBeanId") BeanParentClass bean;
-    
-You can inject using any directly implemented Interface and the bean name: 
-    
-    @Inject @Named("theBeanId") BeanImplementedInterface bean;
+To use Guice instances in the Spring context, you need to add the Seed namespace to your Spring files and use the 
+`<seed:instance>` element:
 
-Note that you always need to qualify your injection with the bean identifier (`@Named("theBeanId")`)
-
-# Seed to Spring
-
-To use Seed instances in Spring contexts, you need to add the Seed namespace to your Spring files:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans" 
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:seed="http://www.seedstack.org/xml-schemas/spring-support"
-           
-           xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-            http://www.seedstack.org/xml-schemas/spring-support http://www.seedstack.org/xml-schemas/spring-support/spring-support-1.1.xsd">
-    
-        ...
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:seed="http://www.seedstack.org/xml-schemas/spring-support"
+       
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.seedstack.org/xml-schemas/spring-support http://seedstack.org/xml-schemas/spring-support/spring-support-1.2.xsd">
         
-    </beans>
-
-
-You can then create a spring bean from any Seed instance bound with a class name:
-
-    <seed:instance id="myService" class="org.myorganization.myproject.MyService"/>
+    <seed:instance id="bean1" class="org.myorganization.myproject.SomeClass"/>
     
-It is equivalent to this Seed injection:
+    <seed:instance id="bean2" class="org.myorganization.myproject.SomeClass" qualifier="someQualifier"/>
+</beans>
+```
 
-    @Inject
-    org.myorganization.myproject.MyService myService;
-    
-Named Seed bindings (bound with a `@Named` qualifier) are also supported:
+The `bean1` declaration is equivalent to the following Guice injection:
+ 
+```java
+public class SomeClass {
+    @Inject 
+    private SomeClass bean1;
+}
+``` 
 
-    <seed:instance id="myService" class="org.myorganization.myproject.MyService" qualifier="myQualifier"/>
+The `bean2` declaration is equivalent to the following Guice injection:
+ 
+```java
+public class SomeClass {
+    @Inject 
+    @Named("someQualifier")
+    private SomeClass bean1;
+}
+``` 
 
-It is equivalent to this Seed injection:
+{{% callout warning %}}
+Since Guice can inject Spring beans and Spring can inject Guice instances, circular dependencies can occur. To break it,
+Guice instances are by default proxied for lazy initialization. If you need to disable this behavior, specify `proxy="false"`:
 
-    @Inject
-    @Named("myQualifier")
-    org.myorganization.myproject.MyService myService;
-    
-Since Seed can inject Spring beans and Spring can inject Seed instances, there is a circular dependency between the two
-injectors. To alleviate this problem, Seed instances are by default proxied for lazy initialization. It allows Spring to 
-initialize its context without needing the Seed injector to be initialized too. You can explicitly disable this proxy:
+```xml
+<seed:instance id="bean2" 
+               class="org.myorganization.myproject.SomeClass" 
+               qualifier="someQualifier" 
+               proxy="false"/>
+```
+{{% /callout %}}
 
-    <seed:instance id="myService" class="org.myorganization.myproject.MyService" qualifier="myQualifier" proxy="false"/>
+## Create configuration values in Spring context
 
-You can also inject configuration values directly:
+SeedStack configuration values can be created in Spring context: 
 
+```xml
     <bean id="..." class="...">
-        <property name="configurationValue">
-            <seed:configuration key="org.myorganization.myproject.my-configuration-value"/>
+        <property name="someValue">
+            <seed:configuration key="myProject.someValue"/>
         </property>
     </bean>
+```
     
-It is equivalent to this Seed configuration injection:
+This will inject the SeedStack `myProject.someValue` configuration value into the `someValue` property of the bean.
+A default value can be specified:
 
-    @Configuration("org.myorganization.myproject.my-configuration-value")
-    String configurationValue;
-    
-Configuration values don't require Seed injector to be initialized and are all available at context initialization. You 
-can specify a default value:
+```xml
+<seed:configuration key="myProject.someValue" default="someDefaultValue"/>
+```
 
-    <seed:configuration key="org.myorganization.myproject.my-configuration-value" default="myDefaultValue"/>
-            
-It is equivalent to this Seed configuration injection:
+You can make a configuration value optional by specifying `mandatory="false"`:
 
-    @Configuration(value = "org.myorganization.myproject.my-configuration-value", defaultValue="myDefaultValue")
-    String configurationValue;
-    
-You can control if a property is mandatory with the mandatory attribute (true by default):
-    
-    <seed:configuration key="org.myorganization.myproject.my-configuration-value" mandatory="false"/>
-    
-If no configuration value nor default value is available and the injection is not mandatory, `null` will be used. 
-    
+```xml
+<seed:configuration key="myProject.someValue" mandatory="false"/>
+```
+
+An identifier can be given to the configuration value to be further referenced:
+
+```xml
+<beans>
+    <seed:configuration id="someConfigProperty" key="myProject.someValue"/>
+    <bean id="..." class="...">
+        <property name="someValue" ref="someConfigProperty"/>
+    </bean>
+</beans>
+```
+
+## JDBC data sources in Spring context
+  
+You can create a JDBC data source bean from a SeedStack configured datasource. The following `datasource1` JDBC datasource:
+ 
+```yaml
+jdbc:
+  datasources:
+    datasource1:
+      url: jdbc:hsqldb:mem:testdb1
+```
+
+Can be retrieved as a bean as below:
+
+```xml
+<seed:datasource id="someDatasource" name="datasource1"/>
+```
+
