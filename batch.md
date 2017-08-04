@@ -106,7 +106,7 @@ The goal of this section is to create your first batch. This one-step job will j
 
 ## Create a service
 
-We will create [a business framework service]({{<relref "docs/business/manual/services.md" >}}) that will be 
+We will create [a business framework service]({{< ref "docs/business/manual/services.md" >}}) that will be 
 injected directly in a Spring Batch tasklet. The service interface: 
 
 ```java
