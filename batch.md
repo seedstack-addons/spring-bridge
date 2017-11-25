@@ -71,7 +71,7 @@ This will execute a Spring Batch job named `someJob` with `param1` set to `value
 
 # Testing
 
-To learn how to do integration testing with SeedStack, check the [testing documentation]({{< ref "docs/seed/manual/testing.md" >}}). 
+To learn how to do integration testing with SeedStack, check the [testing documentation]({{< ref "docs/basics/testing.md" >}}). 
 The following example checks that the batch returns with the exit code 0 and subsequently that the batch result is functionally
 ok:
 
@@ -106,7 +106,7 @@ The goal of this section is to create your first batch. This one-step job will j
 
 ## Create a service
 
-We will create [a business framework service]({{< ref "docs/business/manual/services.md" >}}) that will be 
+We will create [a business framework service]({{< ref "docs/business/services.md" >}}) that will be 
 injected directly in a Spring Batch tasklet. The service interface: 
 
 ```java
