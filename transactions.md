@@ -1,6 +1,6 @@
 ---
-title: "Spring transactions"
-parent: "Spring bridge"
+title: "Transactions"
+addon: "Spring bridge"
 weight: -1
 repo: "https://github.com/seedstack/spring-bridge-addon"
 tags:
@@ -8,7 +8,8 @@ tags:
 zones:
     - Addons
 menu:
-    AddonSpringBridge:
+    Spring bridge:
+        parent: "contents"
         weight: 20
 ---
 
@@ -20,7 +21,7 @@ You can:
 * Manage SeedStack transactions from Spring code.
 
 
-# SeedStack-managed transactions
+## SeedStack-managed transactions
 
 You can specify a Spring-based transaction handler in your Seed transaction demarcation by adding the
 {{< java "org.seedstack.spring.SpringTransactionManager" "@">}} annotation next to the {{< java "org.seedstack.seed.transaction.Transactional" "@">}} one.
@@ -54,18 +55,18 @@ The default name of the transaction manager in the {{< java "org.seedstack.sprin
 parameter is `transactionManager` but you can specify a custom name if needed.
 {{% /callout %}}
 	
-# Spring-managed transactions
+## Spring-managed transactions
 
 Seed has the ability to inject a Spring-configured **JPA EntityManger**  in your SeedStack classes. In that case, Spring 
 is be managing the JPA transactions. SeedStack code is executed within the Spring transaction. This feature can be very 
 useful in batch jobs, when you need to let Spring batch manage transactions for performance reasons.
 
-## Spring configuration
+### Spring configuration
 
 As stated above Spring will be the one that will manage all JPA features (mapping, transaction ...). As such, your 
 Spring context files need contain a complete JPA configuration (datasource + entity manager factory + transaction manager).
 
-## SeedStack configuration
+### SeedStack configuration
 
 SeedStack JPA add-on should be removed if possible or at least left un-configured. Additionally, the SeedStack/Spring 
 bridge must be configured as below:

@@ -1,12 +1,13 @@
 ---
 title: "Spring batch"
-parent: "Spring bridge"
+addon: "Spring bridge"
 weight: -1
 repo: "https://github.com/seedstack/spring-bridge-addon"
 zones:
     - Addons
 menu:
-    AddonSpringBridge:
+    Spring bridge:
+        parent: "contents"
         weight: 30
 ---
 
@@ -15,11 +16,11 @@ Spring-Batch is a comprehensive solution to implement full-featured batch jobs i
  
 More information about Spring Batch can be found [here](http://docs.spring.io/spring-batch/reference/html/index.html).
 
-# Dependency 
+## Dependency 
 
 {{< dependency g="org.seedstack.addons.spring" a="spring-bridge-batch" >}}
 
-# Running jobs
+## Running jobs
 
 Spring Batch jobs are run from a specific command-line handler providing the `run-job` command. To run a Spring Batch job
 packaged in a Capsule, execute the following command:
@@ -30,7 +31,7 @@ java -jar batch-capsule.jar run-job --job someJob
 
 This will run the `someJob` Spring Batch job.
    
-## Options
+### Options
         
 A number of options are available for customizing the `run-job` command behavior:
 
@@ -59,7 +60,7 @@ A number of options are available for customizing the `run-job` command behavior
 </tbody>
 </table>
 
-## Example
+### Example
 
 Consider the following command:
 
@@ -69,7 +70,7 @@ java -jar batch-capsule.jar run-job --job someJob --jobParameter param1=value1 -
 
 This will execute a Spring Batch job named `someJob` with `param1` set to `value1` and `param2` set to `value2`.
 
-# Testing
+## Testing
 
 To learn how to do integration testing with SeedStack, check the [testing documentation]({{< ref "docs/basics/testing.md" >}}). 
 The following example checks that the batch returns with the exit code 0 and subsequently that the batch result is functionally
@@ -100,11 +101,11 @@ Note that the test method is called **after** the job is completed. `@Before` an
 startup (so you can use injection in them) but before job execution (so you can prepare a dataset if needed).
 {{% /callout %}}
 
-# Example
+## Example
 
 The goal of this section is to create your first batch. This one-step job will just print “My Simple Job”.
 
-## Create a service
+### Create a service
 
 We will create [a business framework service]({{< ref "docs/business/services.md" >}}) that will be 
 injected directly in a Spring Batch tasklet. The service interface: 
@@ -134,7 +135,7 @@ public class MessageServiceImpl implements MessageService {
 }
 ```
 
-## Create the Tasklet
+### Create the Tasklet
 
 A tasklet is a Class containing custom logic to be ran as a part of a job. `PrintTasklet` is our custom tasklet which
 implements `Tasklet` interface and overrides the `execute()` method which prints the message from `MessageService`.
@@ -169,7 +170,7 @@ public class PrintTasklet implements Tasklet {
 }
 ```
 
-## Create the job context
+### Create the job context
 
 In this section we will configure the Spring Batch job context to use our Tasklet and inject the `MessageService` Service.
 The `job-context.xml` file:

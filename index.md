@@ -1,25 +1,27 @@
 ---
-title: "Spring bridge"
+title: "Core"
+addon: "Spring bridge"
 repo: "https://github.com/seedstack/spring-bridge-addon"
 author: Adrien LAUER
-description: "Integrates various Spring framework technologies with SeedStack to enable composing hybrid applications."
+description: "Integrates various Spring framework technologies with SeedStack."
 tags:
     - injection
 zones:
     - Addons
 menu:
-    AddonSpringBridge:
+    Spring bridge:
+        parent: "contents"
         weight: 10
 ---
 
 SeedStack Spring bridge add-on is a bi-directional injection bridge between SeedStack (Guice) and Spring. It allows to
 inject Spring beans with Guice and vice-versa.<!--more-->
 
-# Dependency
+## Dependency
 
 {{< dependency g="org.seedstack.addons.spring" a="spring-core" >}}
 
-# Configuration
+## Configuration
 
 {{% config p="spring" %}}
 ```yaml
@@ -33,14 +35,14 @@ spring:
 ```
 {{% /config %}}    
 
-# Usage
+## Usage
 
 {{% callout info %}}
 By default, the add-on detects all XML files named `*-context.xml` located in the `META-INF/spring` classpath location 
 and aggregates them into a global Spring context. This behavior can be changed with the following configuration:
 {{% /callout %}}
 
-## Inject Spring beans in Guice instances
+### Inject Spring beans in Guice instances
 
 The add-on scans the Spring context built from detected and/or explicitly listed XML files and makes every bean injectable
 through Guice with:
@@ -71,7 +73,7 @@ public class SomeClass {
 Note that you always need to qualify your injection with the bean identifier (`@Named("theBeanId")`).
 {{% /callout %}}
 
-## Create Guice instances in Spring context
+### Create Guice instances in Spring context
 
 To use Guice instances in the Spring context, you need to add the Seed namespace to your Spring files and use the 
 `<seed:instance>` element:
@@ -123,7 +125,7 @@ Guice instances are by default proxied for lazy initialization. If you need to d
 ```
 {{% /callout %}}
 
-## Create configuration values in Spring context
+### Create configuration values in Spring context
 
 SeedStack configuration values can be created in Spring context: 
 
@@ -159,7 +161,7 @@ An identifier can be given to the configuration value to be further referenced:
 </beans>
 ```
 
-## JDBC data sources in Spring context
+### JDBC data sources in Spring context
   
 You can create a JDBC data source bean from a SeedStack configured datasource. The following `datasource1` JDBC datasource:
  
