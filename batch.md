@@ -72,7 +72,7 @@ This will execute a Spring Batch job named `someJob` with `param1` set to `value
 
 ## Testing
 
-To learn how to do integration testing with SeedStack, check the [testing documentation]({{< ref "docs/basics/testing.md" >}}). 
+To learn how to do integration testing with SeedStack, check the [testing documentation]({{< ref "docs/core/testing.md" >}}). 
 The following example checks that the batch returns with the exit code 0 and subsequently that the batch result is functionally
 ok:
 
