@@ -7,6 +7,8 @@
  */
 package org.seedstack.spring.internal;
 
+import java.util.Map;
+import javax.persistence.EntityManagerFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +20,6 @@ import org.powermock.reflect.Whitebox;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.SeedException;
-
-import javax.persistence.EntityManagerFactory;
-import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpringEntityManagerLinkTest {

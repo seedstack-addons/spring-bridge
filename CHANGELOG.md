@@ -1,3 +1,7 @@
+# Version 3.1.1 (2017-07-30)
+
+* [fix] Fields annotation with Guice `@Inject` annotation were not detected by Spring JPA override.
+
 # Version 3.1.0 (2017-02-26)
 
 * [new] Add the ability to retrieve a SeedStack JDBC data source with the `seed:datasource` XML element.

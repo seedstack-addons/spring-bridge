@@ -5,14 +5,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.spring.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
+import javax.persistence.EntityManager;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.core.internal.transaction.TransactionalProxy;
-
-import javax.persistence.EntityManager;
 
 class SpringJpaModule extends AbstractModule {
     private Application application;
