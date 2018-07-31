@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,6 +7,8 @@
  */
 package org.seedstack.spring.internal;
 
+import java.util.Map;
+import javax.persistence.EntityManagerFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +20,6 @@ import org.powermock.reflect.Whitebox;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.SeedException;
-
-import javax.persistence.EntityManagerFactory;
-import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpringEntityManagerLinkTest {

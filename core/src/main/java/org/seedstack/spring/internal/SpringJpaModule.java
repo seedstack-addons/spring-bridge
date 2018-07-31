@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,10 +9,9 @@ package org.seedstack.spring.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
+import javax.persistence.EntityManager;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.core.internal.transaction.TransactionalProxy;
-
-import javax.persistence.EntityManager;
 
 class SpringJpaModule extends AbstractModule {
     private Application application;

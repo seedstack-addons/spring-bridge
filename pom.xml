@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,21 +14,25 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>3.0.0</version>
+        <version>3.4.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.seedstack.addons.spring</groupId>
     <artifactId>spring-bridge</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <seed.version>3.1.0</seed.version>
-        <business.version>3.0.2</business.version>
-        <jdbc.version>3.0.1</jdbc.version>
-        <jpa-addon.version>3.0.1</jpa-addon.version>
-        <spring.version>4.3.6.RELEASE</spring.version>
-        <spring-batch.version>3.0.7.RELEASE</spring-batch.version>
+        <seed.version>3.7.0-SNAPSHOT</seed.version>
+        <business.version>4.2.1</business.version>
+        <jdbc.version>3.0.2</jdbc.version>
+        <jpa-addon.version>4.0.2</jpa-addon.version>
+        <spring.version>5.0.0.RELEASE</spring.version>
+        <spring-batch.version>4.0.1.RELEASE</spring-batch.version>
+        <hibernate.version>5.3.3.Final</hibernate.version>
+        <jaxb-api.version>2.2.12</jaxb-api.version>
+        <hsqldb.version>2.3.3</hsqldb.version>
+        <javax.el.version>3.0.0</javax.el.version>
 
         <compatibility.version>3.0.0</compatibility.version>
 
@@ -70,6 +74,7 @@
                             <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
                             <licenseMerge>Apache 2|Apache License, version 2.0</licenseMerge>
                             <licenseMerge>Apache 2|Apache License Version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache 2.0</licenseMerge>
                             <licenseMerge>BSD|The New BSD License</licenseMerge>
                             <licenseMerge>BSD|New BSD License</licenseMerge>
                             <licenseMerge>CDDL|CDDL + GPLv2 with classpath exception</licenseMerge>
@@ -77,6 +82,8 @@
                             <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                             <licenseMerge>MIT|MIT License</licenseMerge>
                             <licenseMerge>MIT|The MIT License</licenseMerge>
+                            <licenseMerge>MIT|MIT license</licenseMerge>
+                            <licenseMerge>IGNORED_LICENSE|GNU General Public License, version 2 (GPL2), with the classpath exception</licenseMerge>
                         </licenseMerges>
                     </configuration>
                 </plugin>
