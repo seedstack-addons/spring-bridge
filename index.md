@@ -19,7 +19,7 @@ inject Spring beans with Guice and vice-versa.<!--more-->
 
 ## Dependency
 
-{{< dependency g="org.seedstack.addons.spring" a="spring-core" >}}
+{{< dependency g="org.seedstack.addons.spring" a="spring-bridge-core" >}}
 
 ## Configuration
 
