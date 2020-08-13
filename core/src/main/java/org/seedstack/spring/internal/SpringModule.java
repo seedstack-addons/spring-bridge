@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,26 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class SpringModule extends AbstractModule {
-    private class SpringBeanDefinition {
-        private String name;
-        private ConfigurableListableBeanFactory beanFactory;
-
-        SpringBeanDefinition(String name, ConfigurableListableBeanFactory beanFactory) {
-            this.name = name;
-            this.beanFactory = beanFactory;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        ConfigurableListableBeanFactory getBeanFactory() {
-            return beanFactory;
-        }
-    }
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringModule.class);
-
     private final ConfigurableListableBeanFactory beanFactory;
     private final Map<Class<?>, Map<String, SpringBeanDefinition>> beanDefinitions;
 
@@ -59,17 +40,14 @@ class SpringModule extends AbstractModule {
 
     private void bindTransactionHandlers() {
         String[] beanNamesForTransactionManager = beanFactory.getBeanNamesForType(AbstractPlatformTransactionManager.class);
-        if (beanNamesForTransactionManager != null && beanNamesForTransactionManager.length > 0) {
-            for (String beanNameForTransactionManager : beanNamesForTransactionManager) {
-                SpringTransactionStatusLink transactionStatusLink = new SpringTransactionStatusLink();
-                SpringTransactionHandler transactionHandler = new SpringTransactionHandler(transactionStatusLink, beanNameForTransactionManager);
-                requestInjection(transactionHandler);
-                bind(Key.get(SpringTransactionHandler.class, Names.named(beanNameForTransactionManager))).toInstance(transactionHandler);
-            }
+        for (String beanNameForTransactionManager : beanNamesForTransactionManager) {
+            SpringTransactionStatusLink transactionStatusLink = new SpringTransactionStatusLink();
+            SpringTransactionHandler transactionHandler = new SpringTransactionHandler(transactionStatusLink, beanNameForTransactionManager);
+            requestInjection(transactionHandler);
+            bind(Key.get(SpringTransactionHandler.class, Names.named(beanNameForTransactionManager))).toInstance(transactionHandler);
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void bindFromApplicationContext() {
         boolean debugEnabled = LOGGER.isDebugEnabled();
 
@@ -88,7 +66,7 @@ class SpringModule extends AbstractModule {
 
                     // FactoryBean special case: retrieve it and query for the object type it creates
                     if (FactoryBean.class.isAssignableFrom(beanClass)) {
-                        beanClass = ((FactoryBean) currentBeanFactory.getBean('&' + beanName)).getObjectType();
+                        beanClass = ((FactoryBean<?>) currentBeanFactory.getBean('&' + beanName)).getObjectType();
                         if (beanClass == null) {
                             LOGGER.warn("Cannot bind spring bean " + beanName + " because its factory bean cannot determine its class");
                             continue;
@@ -130,26 +108,46 @@ class SpringModule extends AbstractModule {
             Map<String, SpringBeanDefinition> definitions = entry.getValue();
 
             // Bind by name for each bean of this type and by type if there is no ambiguity
-            for (SpringBeanDefinition candidate : definitions.values()) {
-                if (debugEnabled) {
-                    LOGGER.info("Binding spring bean " + candidate.getName() + " by name and type " + type.getCanonicalName());
-                }
+            bindBean(debugEnabled, type, definitions);
+        }
+    }
 
-                bind(type).annotatedWith(Names.named(candidate.getName())).toProvider(new SpringBeanProvider(type, candidate.getName(), candidate.getBeanFactory()));
+    private <T> void bindBean(boolean debugEnabled, Class<T> type, Map<String, SpringBeanDefinition> definitions) {
+        for (SpringBeanDefinition candidate : definitions.values()) {
+            if (debugEnabled) {
+                LOGGER.info("Binding spring bean " + candidate.getName() + " by name and type " + type.getCanonicalName());
             }
+
+            bind(type)
+                    .annotatedWith(Names.named(candidate.getName()))
+                    .toProvider(new SpringBeanProvider<>(type, candidate.getName(), candidate.getBeanFactory()));
         }
     }
 
     private void addBeanDefinition(Class<?> beanClass, SpringBeanDefinition springBeanDefinition) {
-        Map<String, SpringBeanDefinition> beansOfType = this.beanDefinitions.get(beanClass);
-        if (beansOfType == null) {
-            beansOfType = new HashMap<>();
-            this.beanDefinitions.put(beanClass, beansOfType);
-        }
+        Map<String, SpringBeanDefinition> beansOfType = this.beanDefinitions.computeIfAbsent(beanClass, k -> new HashMap<>());
 
-        // If there are overriding beans, the first encoutered bean wins (the lowest in the context hierarchy)
+        // If there are overriding beans, the first encountered bean wins (the lowest in the context hierarchy)
         if (!beansOfType.containsKey(springBeanDefinition.getName())) {
             beansOfType.put(springBeanDefinition.getName(), springBeanDefinition);
+        }
+    }
+
+    static private class SpringBeanDefinition {
+        private final String name;
+        private final ConfigurableListableBeanFactory beanFactory;
+
+        SpringBeanDefinition(String name, ConfigurableListableBeanFactory beanFactory) {
+            this.name = name;
+            this.beanFactory = beanFactory;
+        }
+
+        String getName() {
+            return name;
+        }
+
+        ConfigurableListableBeanFactory getBeanFactory() {
+            return beanFactory;
         }
     }
 }

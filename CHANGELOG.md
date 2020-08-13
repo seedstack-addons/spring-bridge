@@ -1,3 +1,7 @@
+# Version 3.1.2 (2020-08-13)
+
+* [chg] Update for Seed 3.10+
+
 # Version 3.1.1 (2017-07-30)
 
 * [fix] Fields annotation with Guice `@Inject` annotation were not detected by Spring JPA override.

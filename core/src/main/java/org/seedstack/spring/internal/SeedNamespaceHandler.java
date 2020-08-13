@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -28,7 +28,7 @@ public class SeedNamespaceHandler extends NamespaceHandlerSupport {
         registerBeanDefinitionParser(DATA_SOURCE_LOCAL_NAME, new SeedDataSourceDefinitionParser());
     }
 
-    private class SeedInstanceDefinitionParser extends AbstractSingleBeanDefinitionParser {
+    private static class SeedInstanceDefinitionParser extends AbstractSingleBeanDefinitionParser {
         @Override
         protected Class<?> getBeanClass(Element element) {
             return SeedInstanceFactoryBean.class;
@@ -56,7 +56,7 @@ public class SeedNamespaceHandler extends NamespaceHandlerSupport {
         }
     }
 
-    private class SeedConfigurationDefinitionParser extends AbstractSingleBeanDefinitionParser {
+    private static class SeedConfigurationDefinitionParser extends AbstractSingleBeanDefinitionParser {
         @Override
         protected Class<?> getBeanClass(Element element) {
             return SeedConfigurationFactoryBean.class;
@@ -84,7 +84,7 @@ public class SeedNamespaceHandler extends NamespaceHandlerSupport {
         }
     }
 
-    private class SeedDataSourceDefinitionParser extends AbstractSingleBeanDefinitionParser {
+    private static class SeedDataSourceDefinitionParser extends AbstractSingleBeanDefinitionParser {
         @Override
         protected Class<?> getBeanClass(Element element) {
             return SeedDataSourceFactoryBean.class;

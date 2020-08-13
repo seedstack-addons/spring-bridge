@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,10 +7,10 @@
  */
 package org.seedstack.spring.batch.internal;
 
+import com.google.common.base.Strings;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
-import org.apache.commons.lang.StringUtils;
 import org.seedstack.seed.cli.CliCommand;
 import org.seedstack.seed.cli.CliOption;
 import org.seedstack.seed.cli.CommandLineHandler;
@@ -111,7 +111,7 @@ public class SpringBatchCommandLineHandler implements CommandLineHandler {
     private String option(String option, String defaultName) {
         String ret = defaultName;
 
-        if (!StringUtils.isBlank(option)) {
+        if (!Strings.isNullOrEmpty(option)) {
             ret = option;
         }
 

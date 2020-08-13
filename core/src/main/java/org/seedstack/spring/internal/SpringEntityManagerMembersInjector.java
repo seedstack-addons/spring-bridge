@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,11 +9,13 @@ package org.seedstack.spring.internal;
 
 import com.google.inject.MembersInjector;
 import org.seedstack.seed.Application;
-import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.internal.transaction.TransactionalProxy;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.Field;
+
+import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
+import static org.seedstack.shed.reflect.ReflectUtils.setValue;
 
 class SpringEntityManagerMembersInjector<T> implements MembersInjector<T> {
     private final Field field;
@@ -24,17 +26,14 @@ class SpringEntityManagerMembersInjector<T> implements MembersInjector<T> {
         this.field = field;
         this.application = application;
         this.currentClass = currentClass;
-
     }
 
     @Override
     public void injectMembers(T instance) {
-        try {
-            this.field.setAccessible(true);
-            field.set(instance, TransactionalProxy.create(EntityManager.class, new SpringEntityManagerLink(application, currentClass)));
-        } catch (IllegalAccessException e) {
-            throw SeedException.wrap(e, SpringErrorCode.NO_SPRING_ENTITYMANAGER).put("class", currentClass);
-        }
+        setValue(
+                makeAccessible(this.field),
+                instance,
+                TransactionalProxy.create(EntityManager.class, new SpringEntityManagerLink(application, currentClass))
+        );
     }
-
 }

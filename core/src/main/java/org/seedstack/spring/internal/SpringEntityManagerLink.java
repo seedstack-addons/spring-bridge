@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,16 +7,17 @@
  */
 package org.seedstack.spring.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import org.apache.commons.lang.StringUtils;
+import com.google.common.base.Strings;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.transaction.spi.TransactionalLink;
 import org.springframework.orm.jpa.EntityManagerHolder;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
     private static final String GENERIC_UNIT_NAME_PROPERTY = "seedstack.jpaUnitName";
@@ -50,18 +51,26 @@ class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
 
         EntityManager entityManager;
         String unitFromClass = application.getConfiguration(currentClass).get(JPA_UNIT_PROPERTY);
-        if (StringUtils.isBlank(unitFromClass)) {
+        if (Strings.isNullOrEmpty(unitFromClass)) {
             if (mapEntityFactories.size() > 1) {
                 throw SeedException
                         .createNew(SpringErrorCode.AMBIGUOUS_SPRING_ENTITYMANAGER)
                         .put("class", currentClass.getName())
                         .put("currentTransaction", TransactionSynchronizationManager.getCurrentTransactionName());
             } else {
-                entityManager = ((EntityManagerHolder) TransactionSynchronizationManager.getResource
+                EntityManagerHolder entityManagerHolder = (EntityManagerHolder) TransactionSynchronizationManager.getResource
                         (mapEntityFactories.entrySet()
                                 .iterator()
                                 .next()
-                                .getValue())).getEntityManager();
+                                .getValue());
+                if (entityManagerHolder != null) {
+                    entityManager = entityManagerHolder.getEntityManager();
+                } else {
+                    throw SeedException
+                            .createNew(SpringErrorCode.UNABLE_TO_ACCESS_SPRING_ENTITYMANAGER)
+                            .put("class", currentClass.getName())
+                            .put("currentTransaction", TransactionSynchronizationManager.getCurrentTransactionName());
+                }
             }
         } else {
             EntityManagerFactory entityManagerFactory = mapEntityFactories.get(unitFromClass);
@@ -72,8 +81,15 @@ class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
                         .put("unit", unitFromClass)
                         .put("currentTransaction", TransactionSynchronizationManager.getCurrentTransactionName());
             }
-            entityManager = ((EntityManagerHolder) TransactionSynchronizationManager.getResource
-                    (entityManagerFactory)).getEntityManager();
+            EntityManagerHolder entityManagerHolder = (EntityManagerHolder) TransactionSynchronizationManager.getResource(entityManagerFactory);
+            if (entityManagerHolder != null) {
+                entityManager = entityManagerHolder.getEntityManager();
+            } else {
+                throw SeedException
+                        .createNew(SpringErrorCode.UNABLE_TO_ACCESS_SPRING_ENTITYMANAGER)
+                        .put("class", currentClass.getName())
+                        .put("currentTransaction", TransactionSynchronizationManager.getCurrentTransactionName());
+            }
         }
 
         return entityManager;
@@ -83,9 +99,10 @@ class SpringEntityManagerLink implements TransactionalLink<EntityManager> {
         Map<String, Object> properties = emf.getProperties();
 
         String unitName = String.valueOf(properties.get(HIBERNATE_UNIT_NAME_PROPERTY));
-        if (StringUtils.isBlank(unitName)) {
+        if (Strings.isNullOrEmpty(unitName)) {
             unitName = String.valueOf(properties.get(GENERIC_UNIT_NAME_PROPERTY));
-        } else if (StringUtils.isBlank(unitName)) {
+        }
+        if (Strings.isNullOrEmpty(unitName)) {
             throw SeedException.createNew(SpringErrorCode.UNABLE_TO_RESOLVE_JPA_UNIT)
                     .put("entityManagerFactory", emf.toString());
         }

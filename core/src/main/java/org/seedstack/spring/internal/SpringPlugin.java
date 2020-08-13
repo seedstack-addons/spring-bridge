@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,6 +8,7 @@
 package org.seedstack.spring.internal;
 
 import com.google.common.collect.Lists;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
@@ -64,6 +65,7 @@ public class SpringPlugin extends AbstractSeedPlugin {
     }
 
     @Override
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "not ideal but static write is used to cross framework boundaries")
     public InitState initialize(InitContext initContext) {
         SeedConfigurationFactoryBean.configuration = getConfiguration();
         springConfig = getConfiguration(SpringConfig.class);
@@ -89,7 +91,7 @@ public class SpringPlugin extends AbstractSeedPlugin {
         }
 
         LOGGER.info("Initializing spring context(s) " + applicationContextsPaths);
-        globalApplicationContext = new ClassPathXmlApplicationContext(this.applicationContextsPaths.toArray(new String[this.applicationContextsPaths.size()]));
+        globalApplicationContext = new ClassPathXmlApplicationContext(this.applicationContextsPaths.toArray(new String[0]));
         return InitState.INITIALIZED;
     }
 

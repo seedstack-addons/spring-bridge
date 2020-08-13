@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,5 +14,6 @@ enum SpringErrorCode implements ErrorCode {
     NO_ACTIVE_SPRING_TRANSACTION,
     NO_SPRING_ENTITYMANAGER,
     UNABLE_TO_RESOLVE_JPA_UNIT,
+    UNABLE_TO_ACCESS_SPRING_ENTITYMANAGER,
     UNKNOWN_SPRING_ENTITYMANAGER
 }
